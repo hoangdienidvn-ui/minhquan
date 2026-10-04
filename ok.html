@@ -1,0 +1,3963 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bài tập Toán lớp 2</title>
+
+<style>
+  
+<style>
+  
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* =========================================================
+   QUIZ LAYOUT
+========================================================= */
+
+.quiz-container-1 {
+    display: flex;
+    gap: 24px;
+
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.quiz-main-1 {
+    flex: 1;
+    min-width: 0;
+}
+
+.questions-list-1 {
+    width: 100%;
+}
+
+
+/* =========================================================
+   QUESTION
+========================================================= */
+
+.question-item-1 {
+    margin-bottom: 20px;
+    padding: 20px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    scroll-margin-top: 20px;
+}
+
+.question-number-1 {
+    margin: 0 0 12px;
+
+    font-size: 21px;
+    color: #111827;
+}
+
+.question-text-1 {
+    margin-bottom: 18px;
+
+    font-size: 18px;
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   QUESTION IMAGE
+========================================================= */
+
+.question-image-1 {
+    margin: 15px 0;
+
+    text-align: center;
+}
+
+.question-image-1 img {
+    display: block;
+
+    max-width: 100%;
+    height: auto;
+
+    margin: auto;
+}
+
+
+/* =========================================================
+   ANSWERS
+========================================================= */
+
+.answers-1 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+.answer-1 {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+    min-height: 52px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    background: #fff;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.answer-1:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
+
+.answer-1 input {
+    display: none;
+}
+
+.answer-label-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    background: #eef2f7;
+
+    border-radius: 50%;
+
+    font-weight: bold;
+}
+
+.answer-content-1 {
+    flex: 1;
+    min-width: 0;
+
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   ANSWER STATES
+========================================================= */
+
+/* Selected */
+
+.answer-1.selected-1 {
+    background: #eff6ff;
+    border-color: #2563eb;
+}
+
+
+/* Correct */
+
+.answer-1.correct-1 {
+    background: #f0fdf4;
+    border-color: #16a34a;
+}
+
+.answer-1.correct-1 .answer-label-1 {
+    background: #16a34a;
+    color: #fff;
+}
+
+
+/* Wrong */
+
+.answer-1.wrong-1 {
+    background: #fef2f2;
+    border-color: #dc2626;
+}
+
+.answer-1.wrong-1 .answer-label-1 {
+    background: #dc2626;
+    color: #fff;
+}
+
+
+/* =========================================================
+   TEXT ANSWER
+========================================================= */
+
+.text-answer-box-1 {
+    display: flex;
+    align-items: stretch;
+
+    gap: 10px;
+
+    width: 100%;
+
+    margin-top: 15px;
+}
+
+.text-answer-input-1 {
+    flex: 1 1 auto;
+
+    min-width: 0;
+    height: 52px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    background: #fff;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+
+    font-size: 17px;
+}
+
+.text-answer-input-1:focus {
+    outline: none;
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(37, 99, 235, .10);
+}
+
+.text-answer-input-1.correct-1 {
+    background: #f0fdf4;
+    border-color: #16a34a;
+}
+
+.text-answer-input-1.wrong-1 {
+    background: #fef2f2;
+    border-color: #dc2626;
+}
+
+
+/* =========================================================
+   CHECK BUTTON
+========================================================= */
+
+.check-answer-btn-1 {
+    min-width: 105px;
+    height: 52px;
+
+    padding: 0 17px;
+
+    box-sizing: border-box;
+
+    background: #2563eb;
+    color: #fff;
+
+    border: 0;
+    border-radius: 9px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.check-answer-btn-1:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================================
+   LOCKED / DISABLED
+========================================================= */
+
+.question-item-1.answered-1 .answer-1 {
+    pointer-events: none;
+    cursor: default;
+}
+
+.text-answer-input-1:disabled {
+    opacity: 1;
+
+    color: #222;
+
+    cursor: not-allowed;
+
+    -webkit-text-fill-color: #222;
+}
+
+.check-answer-btn-1:disabled {
+    opacity: 1;
+
+    background: #94a3b8;
+    color: #fff;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   SOLUTION
+========================================================= */
+
+.solution-1 {
+    display: none;
+
+    margin-top: 16px;
+    padding: 14px 16px;
+
+    background: #eff6ff;
+
+    border-left: 4px solid #2563eb;
+    border-radius: 8px;
+
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.solution-1.show-1 {
+    display: block;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.quiz-sidebar-1 {
+    position: sticky;
+    top: 15px;
+
+    align-self: flex-start;
+
+    width: 280px;
+
+    flex: 0 0 280px;
+
+    padding: 18px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+.sidebar-title-1 {
+    margin: 0 0 18px;
+
+    text-align: center;
+
+    font-size: 20px;
+}
+
+.quiz-close-btn-1 {
+    display: none;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+.stat-1 {
+    padding: 10px 6px;
+
+    background: #f8fafc;
+
+    border-radius: 10px;
+
+    text-align: center;
+}
+
+.stat-number-1 {
+    display: block;
+
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.stat-label-1 {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 15px;
+    color: #475569;
+}
+
+
+/* =========================================================
+   QUESTION GRID
+========================================================= */
+
+.question-grid-1 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 8px;
+}
+
+.question-btn-1 {
+    min-width: 0;
+
+    aspect-ratio: 1;
+
+    background: #fff;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.question-btn-1:hover {
+    border-color: #2563eb;
+}
+
+.question-btn-1.current-1 {
+    outline: 2px solid #2563eb;
+}
+
+.question-btn-1.correct-1 {
+    background: #16a34a;
+    color: #fff;
+
+    border-color: #16a34a;
+
+    outline: none;
+}
+
+.question-btn-1.wrong-1 {
+    background: #dc2626;
+    color: #fff;
+
+    border-color: #dc2626;
+
+    outline: none;
+}
+
+
+/* =========================================================
+   LEGEND
+========================================================= */
+
+.legend-1 {
+    display: grid;
+
+    gap: 8px;
+
+    margin-top: 20px;
+    padding-top: 16px;
+
+    border-top: 1px solid #eee;
+}
+
+.legend-item-1 {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+}
+
+.legend-box-1 {
+    width: 18px;
+    height: 18px;
+
+    background: #fff;
+
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+}
+
+.legend-box-1.correct-1 {
+    background: #16a34a;
+    border-color: #16a34a;
+}
+
+.legend-box-1.wrong-1 {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.open-menu-btn-1 {
+    display: none;
+}
+
+
+/* =========================================================
+   PDF BUTTON
+========================================================= */
+
+.print-button-wrap {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 20px;
+}
+
+#showPrintPreview-1 {
+    padding: 12px 24px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   PDF PREVIEW
+========================================================= */
+
+#pdfPreviewWrap-1 {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    margin: 0;
+    padding: 30px 15px 60px;
+
+    overflow-x: auto;
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    background: #525659;
+
+    border: 0;
+
+    z-index: 99999;
+}
+
+#pdfContent-1 {
+    width: 794px;
+    min-height: 1123px;
+
+    margin: 0 auto;
+    padding: 38px 42px;
+
+    box-sizing: border-box;
+
+    background: #fff;
+    color: #111827;
+
+    font-size: 18px;
+    line-height: 1.55;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0, 0, 0, .14);
+}
+
+.pdf-question-item-1 {
+    padding-bottom: 10px;
+
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    /* -----------------------------------------
+       QUIZ LAYOUT
+    ----------------------------------------- */
+
+    .quiz-container-1 {
+        display: block;
+    }
+
+
+    /* -----------------------------------------
+       QUESTION
+    ----------------------------------------- */
+
+    .question-item-1 {
+        margin-bottom: 15px;
+        padding: 15px;
+
+        border-radius: 11px;
+    }
+
+    .question-number-1 {
+        font-size: 20px;
+    }
+
+    .question-text-1 {
+        font-size: 18px;
+    }
+
+
+    /* -----------------------------------------
+       ANSWERS
+    ----------------------------------------- */
+
+    .answers-1 {
+        grid-template-columns: 1fr;
+    }
+
+    .answer-1 {
+        width: 100%;
+
+        padding: 0 14px;
+
+        box-sizing: border-box;
+    }
+
+    .answer-content-1 {
+        font-size: 17px;
+    }
+
+
+    /* -----------------------------------------
+       TEXT ANSWER + BUTTON
+    ----------------------------------------- */
+
+    .text-answer-box-1 {
+        flex-direction: column;
+
+        width: 100%;
+
+        gap: 10px;
+    }
+
+    .text-answer-input-1,
+    .check-answer-btn-1 {
+        width: 100%;
+        height: 56px;
+        min-height: 56px;
+
+        box-sizing: border-box;
+    }
+
+    .text-answer-input-1 {
+        padding: 0 16px;
+
+        font-size: 18px;
+    }
+
+    .check-answer-btn-1 {
+        padding: 0 16px;
+
+        font-size: 17px;
+    }
+
+
+    /* -----------------------------------------
+       MOBILE MENU BUTTON
+    ----------------------------------------- */
+
+    .open-menu-btn-1 {
+        display: flex;
+
+        position: fixed;
+        right: 14px;
+        bottom: 18px;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 54px;
+        height: 54px;
+
+        background: #2563eb;
+        color: #fff;
+
+        border: none;
+        border-radius: 50%;
+
+        font-size: 22px;
+
+        box-shadow:
+            0 5px 18px
+            rgba(0, 0, 0, .2);
+
+        cursor: pointer;
+
+        z-index: 999;
+    }
+
+
+    /* -----------------------------------------
+       MOBILE SIDEBAR
+    ----------------------------------------- */
+
+    .quiz-sidebar-1 {
+        position: fixed;
+
+        top: 0;
+        right: -100%;
+
+        width: min(330px, 90vw);
+        height: 100vh;
+
+        padding: 18px;
+
+        overflow-y: auto;
+
+        border-radius: 0;
+
+        transition: right .28s ease;
+
+        box-shadow:
+            -5px 0 20px
+            rgba(0, 0, 0, .12);
+
+        z-index: 9999;
+    }
+
+    .quiz-sidebar-1.open-1 {
+        right: 0;
+    }
+
+    .quiz-close-btn-1 {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 40px;
+        height: 40px;
+
+        margin-left: auto;
+
+        background: transparent;
+
+        border: 0;
+
+        font-size: 30px;
+
+        cursor: pointer;
+    }
+
+
+    /* -----------------------------------------
+       PDF MOBILE
+    ----------------------------------------- */
+
+    #pdfPreviewWrap-1 {
+        padding: 15px 0;
+    }
+
+    #pdfContent-1 {
+        box-shadow: none;
+
+        transform-origin: top left;
+    }
+}
+img {
+   max-width: 100%;
+    height: auto;
+    display: block;
+}
+</style>
+</style>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+
+<body>
+
+<button
+    type="button"
+    class="open-menu-btn-1"
+    id="openQuizMenu-1">
+    ☰
+</button>
+
+
+<div class="quiz-container-1">
+
+
+    <main class="quiz-main-1">
+
+        <div
+            id="questionsList-1"
+            class="questions-list-1">
+
+            <!--  -->
+
+
+                
+
+
+            <!--  -->
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+    <aside
+        id="quizSidebar-1"
+        class="quiz-sidebar-1">
+
+
+        <button
+            type="button"
+            id="closeQuizMenu-1"
+            class="quiz-close-btn-1">
+
+            ×
+
+        </button>
+
+
+        <h2 class="sidebar-title-1">
+
+            Danh sách câu hỏi
+
+        </h2>
+
+
+        <div class="stats-1">
+
+
+            <div class="stat-1">
+
+                <span
+                    id="unansweredCount-1"
+                    class="stat-number-1">
+
+                    0
+
+                </span>
+
+                <span class="stat-label-1">
+
+                    Chưa trả lời
+
+                </span>
+
+            </div>
+
+
+            <div class="stat-1">
+
+                <span
+                    id="answeredCount-1"
+                    class="stat-number-1">
+
+                    0
+
+                </span>
+
+                <span class="stat-label-1">
+
+                    Đã trả lời
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            id="questionGrid-1"
+            class="question-grid-1">
+        </div>
+
+
+        <div class="legend-1">
+
+
+            <div class="legend-item-1">
+
+                <span class="legend-box-1">
+                </span>
+
+                <span>
+                    Chưa trả lời
+                </span>
+
+            </div>
+
+
+            <div class="legend-item-1">
+
+                <span
+                    class="legend-box-1 correct-1">
+                </span>
+
+                <span>
+                    Trả lời đúng
+                </span>
+
+            </div>
+
+
+            <div class="legend-item-1">
+
+                <span
+                    class="legend-box-1 wrong-1">
+                </span>
+
+                <span>
+                    Trả lời sai
+                </span>
+
+            </div>
+
+
+        </div>
+
+        <div class="print-button-wrap">
+    <button type="button" id="showPrintPreview-1">
+        Xem bản in A4
+    </button>
+</div>
+
+    </aside>
+
+</div>
+
+
+
+<script>
+const questionsData = [
+    {
+        "made": 1,
+        "type": "text",
+        "dangcauhoi": 5,
+        "cauhoi": "<div class='en'>Peter has 7 $1 coins, 2 $2 coins, and 1 $5 coin. How many ways can he buy a $7 souvenir without any changes?</div><div class='vi'>Peter có 7 đồng xu 1 đô, 2 đồng xu 2 đô và 1 đồng xu 5 đô. Hỏi anh ấy có bao nhiêu cách mua món quà lưu niệm có giá 7 đô mà không cần nhận tiền trả lại?</div>",
+        "img": "",
+        "answer": "5",
+        "wrong_answers": [],
+        "solution": "Ta có các cách tạo thành 7 đô như sau:<br/>7 = 1 + 1 + 1 + 1 + 1 + 1 + 1<br/>7 = 2 + 1 + 1 + 1 + 1 + 1<br/>7 = 2 + 2 + 1 + 1 + 1<br/>7 = 5 + 1 + 1<br/>7 = 5 + 2<br/>Như vậy, có tất cả 5 cách để mua món quà có giá 7 đô.<br/>Đáp số: 5."
+    },
+    {
+        "made": 2,
+        "type": "text",
+        "dangcauhoi": 5,
+        "cauhoi": "<div class='en'>Peter has 6 $1 coins, 2 $2 coins, and 4 $5 coins. At most how many souvenir(s) can he buy if a souvenir costs $6?</div><div class='vi'>Peter có 6 đồng xu 1 đô, 2 đồng xu 2 đô và 4 đồng xu 5 đô. Hỏi anh ấy có thể mua được nhiều nhất bao nhiêu món quà lưu niệm có giá 6 đô?</div>",
+        "img": "",
+        "answer": "5",
+        "wrong_answers": [],
+        "solution": "Peter có số tiền là:<br/>1 + 1 + 1 + 1 + 1 + 1 + 2 + 2 + 5 + 5 + 5 + 5<br/>= 6 × 1 + 2 × 2 + 4 × 5<br/>= 6 + 4 + 20<br/>= 30 đô.<br/><br/>Cách 1: Thực hiện phép chia:<br/>30 : 6 = 5 (món).<br/><br/>Cách 2: Thực hiện phép cộng:<br/>6 + 6 + 6 + 6 + 6 = 30.<br/>Ta lần lượt cộng 6 đến khi hết tiền. Vì có 5 số 6, nghĩa là Peter mua được 5 món quà lưu niệm.<br/>Đáp số: 5."
+    },
+    {
+        "made": 3,
+        "type": "text",
+        "dangcauhoi": 5,
+        "cauhoi": "<div class='en'>Austin has 8 $1 coins, 1 $2 coin, and 2 $5 coins. How many way(s) can he buy a book that costs $8 without any changes?</div><div class='vi'>Austin có 8 đồng xu 1 đô, 1 đồng xu 2 đô và 2 đồng xu 5 đô. Hỏi anh ấy có bao nhiêu cách mua 1 cuốn sách có giá 8 đô mà không cần nhận tiền trả lại?</div>",
+        "img": "",
+        "answer": "4",
+        "wrong_answers": [],
+        "solution": "Ta có các cách tạo thành 8 đô như sau:<br/>8 = 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1<br/>8 = 2 + 1 + 1 + 1 + 1 + 1 + 1<br/>8 = 5 + 2 + 1<br/>8 = 5 + 1 + 1 + 1<br/>Có 4 cách mua sách không cần tiền trả lại.<br/>Đáp số: 4."
+    },
+    {
+        "made": 4,
+        "type": "text",
+        "dangcauhoi": 5,
+        "cauhoi": "<div class='en'>Mike has 6 $1 coins, 4 $2 coins, and 2 $5 coins. At most how many pencils can he buy knowing that each pencil costs $4?</div><div class='vi'>Mike có 6 đồng xu 1 đô la, 4 đồng xu 2 đô la và 2 đồng xu 5 đô la. Hỏi anh ấy có thể mua được nhiều nhất bao nhiêu cái bút chì giá 4 đô la?</div>",
+        "img": "",
+        "answer": "6",
+        "wrong_answers": [],
+        "solution": "6 đồng xu 1 đô la = 6 đô la.<br/>4 đồng xu 2 đô la:<br/>2 + 2 + 2 + 2 = 2 × 4 = 8 (đô la).<br/>2 đồng xu 5 đô la:<br/>5 + 5 = 10 (đô la).<br/><br/>Tổng số tiền Mike có là:<br/>6 + 8 + 10 = 24 (đô la).<br/><br/>Cách 1:<br/>24 = 4 + 4 + 4 + 4 + 4 + 4.<br/>Có 6 số 4 nên Mike mua được nhiều nhất 6 cái bút chì.<br/><br/>Cách 2:<br/>24 : 4 = 6 (cái).<br/>Đáp số: 6."
+    },
+    {
+        "made": 5,
+        "type": "text",
+        "dangcauhoi": 5,
+        "cauhoi": "<div class='en'>James has 7 $1 coins and 3 $5 coins. Nicole has 3 $2 coins and 1 $10 coin. Who has more money?</div><div class='vi'>James có 7 đồng 1 đô la và 3 đồng 5 đô la. Nicole có 3 đồng 2 đô la và 1 đồng 10 đô la. Ai có nhiều tiền hơn?</div>",
+        "img": "",
+        "answer": "James",
+        "wrong_answers": [],
+        "solution": "Số tiền James có là:<br/>7 + 5 + 5 + 5 = 22 (đô la).<br/><br/>Số tiền Nicole có là:<br/>2 + 2 + 2 + 10 = 16 (đô la).<br/><br/>Vì 22 > 16 nên James có nhiều tiền hơn Nicole.<br/>Đáp số: James."
+    },
+    {
+        "made": 6,
+        "type": "text",
+        "dangcauhoi": 5,
+        "cauhoi": "<div class='en'>Oliver has 2 $1 coins, 3 $2 coins, and 3 $5 coins. At most how many toy(s) can he buy if a toy costs $6?</div><div class='vi'>Oliver có 2 đồng xu 1 đô, 3 đồng xu 2 đô và 3 đồng xu 5 đô. Hỏi anh ấy có thể mua được nhiều nhất bao nhiêu món đồ chơi, biết rằng mỗi món có giá 6 đô?</div>",
+        "img": "",
+        "answer": "3",
+        "wrong_answers": [],
+        "solution": "Oliver có số tiền là:<br/>2 × 1 + 3 × 2 + 3 × 5<br/>= 2 + 6 + 15<br/>= 8 + 15<br/>= 23 đô la.<br/><br/>Vì mỗi món đồ chơi có giá 6 đô la nên ta cộng 6 lần lượt đến khi Oliver không mua được thêm đồ chơi nữa.<br/>6 + 6 + 6 = 18.<br/>Nếu mua tiếp thì không đủ tiền.<br/>Có 3 số 6, nghĩa là Oliver mua được nhiều nhất 3 món đồ chơi.<br/>Đáp số: 3."
+    },
+    {
+        "made": 7,
+        "type": "text",
+        "dangcauhoi": 5,
+        "cauhoi": "<div class='en'>Jason has 6 $2 coins and 3 $5 coins. He buys 2 books. Given that each book costs $10, how many dollars does he have left?</div><div class='vi'>Jason có 6 đồng xu 2 đô la và 3 đồng xu 5 đô la. Anh ấy mua 2 cuốn sách. Biết rằng mỗi cuốn sách có giá 10 đô la. Anh ta còn lại bao nhiêu đô la?</div>",
+        "img": "",
+        "answer": "7",
+        "wrong_answers": [],
+        "solution": "6 đồng xu 2 đô la:<br/>2 + 2 + 2 + 2 + 2 + 2 = 2 × 6 = 12 (đô la).<br/><br/>3 đồng xu 5 đô la:<br/>5 + 5 + 5 = 3 × 5 = 15 (đô la).<br/><br/>Jason có tất cả:<br/>12 + 15 = 27 (đô la).<br/><br/>Tiền mua hai cuốn sách là:<br/>10 + 10 = 20 (đô la).<br/><br/>Jason còn lại số tiền là:<br/>27 - 20 = 7 (đô la).<br/>Đáp số: 7."
+    },
+  {
+        id: 15,
+        type: "multi",
+        cauhoi: "Kết quả của phép cộng 67 + 26 là:",
+        img: "",
+        answer: "<img src='1-16.png'>",
+        wrong_answers: [
+            "<img src='1-10.png'>",
+            "<img src='1-19.png'>",
+            "<img src='1-20.png'>"
+        ],
+        solution: "Đáp án đúng : 93\n(67 + 26 = 93)"
+    },
+  {
+        id: 18,
+        type: "multi",
+        cauhoi: "Số hình tam giác có trong hình vẽ là:",
+        img: "1-13.png",
+        answer: "4 hình",
+        wrong_answers: [
+            "2 hình",
+            "3 hình",
+            "5 hình"
+        ],
+        solution: "Đáp án đúng : 4 hình\n(3 hình đơn, 1 hình đôi)"
+    }
+];
+
+
+
+const MEDIA_URL = "https://archive.org/download/";
+
+(function () {
+
+    "use strict";
+
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+
+            const showBtn =
+                document.getElementById(
+                    "showPrintPreview-1"
+                );
+
+
+            /*
+             * Trang không có nút PDF
+             * => không chạy
+             */
+
+            if (!showBtn) {
+                return;
+            }
+
+
+            /* =================================================
+               DELAY
+            ================================================= */
+
+            function delay(ms) {
+
+                return new Promise(
+                    function (resolve) {
+
+                        setTimeout(
+                            resolve,
+                            ms
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               CHECK LIBRARY
+            ================================================= */
+
+            function checkLibraries() {
+
+
+                if (
+                    typeof html2canvas ===
+                    "undefined"
+                ) {
+
+                    throw new Error(
+                        "html2canvas chưa được tải."
+                    );
+
+                }
+
+
+                if (
+                    !window.jspdf ||
+                    !window.jspdf.jsPDF
+                ) {
+
+                    throw new Error(
+                        "jsPDF chưa được tải."
+                    );
+
+                }
+
+            }
+
+
+            /* =================================================
+               WAIT IMAGE
+            ================================================= */
+
+            async function waitImagesReady(
+                root
+            ) {
+
+
+                const images =
+                    Array.from(
+                        root.querySelectorAll(
+                            "img"
+                        )
+                    );
+
+
+                await Promise.all(
+
+                    images.map(
+                        function (img) {
+
+
+                            if (
+                                img.complete &&
+                                img.naturalWidth > 0
+                            ) {
+
+
+                                if (
+                                    img.decode
+                                ) {
+
+                                    return img
+                                        .decode()
+                                        .catch(
+                                            function () {}
+                                        );
+
+                                }
+
+
+                                return Promise.resolve();
+
+                            }
+
+
+                            return new Promise(
+                                function (
+                                    resolve
+                                ) {
+
+
+                                    let done =
+                                        false;
+
+
+                                    function finish() {
+
+
+                                        if (done) {
+                                            return;
+                                        }
+
+
+                                        done =
+                                            true;
+
+
+                                        resolve();
+
+                                    }
+
+
+                                    img.addEventListener(
+                                        "load",
+                                        finish,
+                                        {
+                                            once:
+                                                true
+                                        }
+                                    );
+
+
+                                    img.addEventListener(
+                                        "error",
+                                        finish,
+                                        {
+                                            once:
+                                                true
+                                        }
+                                    );
+
+
+                                    setTimeout(
+                                        finish,
+                                        10000
+                                    );
+
+                                }
+                            );
+
+                        }
+                    )
+
+                );
+
+            }
+
+
+            /* =================================================
+               IMAGE URL -> BASE64
+            ================================================= */
+
+            async function imageUrlToDataURL(
+                url
+            ) {
+
+
+                try {
+
+
+                    const response =
+                        await fetch(
+                            url,
+                            {
+                                mode:
+                                    "cors",
+
+                                cache:
+                                    "force-cache"
+                            }
+                        );
+
+
+                    if (
+                        !response.ok
+                    ) {
+
+                        return null;
+
+                    }
+
+
+                    const blob =
+                        await response.blob();
+
+
+                    return await new Promise(
+                        function (
+                            resolve,
+                            reject
+                        ) {
+
+
+                            const reader =
+                                new FileReader();
+
+
+                            reader.onloadend =
+                                function () {
+
+                                    resolve(
+                                        reader.result
+                                    );
+
+                                };
+
+
+                            reader.onerror =
+                                reject;
+
+
+                            reader.readAsDataURL(
+                                blob
+                            );
+
+                        }
+                    );
+
+                }
+
+                catch (
+                    error
+                ) {
+
+
+                    console.warn(
+                        "Không chuyển được ảnh:",
+                        url
+                    );
+
+
+                    return null;
+
+                }
+
+            }
+
+
+            /* =================================================
+               PREPARE IMAGE
+            ================================================= */
+
+            async function prepareImagesForPdf(
+                root
+            ) {
+
+
+                const images =
+                    Array.from(
+                        root.querySelectorAll(
+                            "img"
+                        )
+                    );
+
+
+                for (
+                    let i = 0;
+                    i < images.length;
+                    i++
+                ) {
+
+
+                    const img =
+                        images[i];
+
+
+                    let src =
+                        img.getAttribute(
+                            "src"
+                        );
+
+
+                    if (!src) {
+                        continue;
+                    }
+
+
+                    if (
+                        src.startsWith(
+                            "data:"
+                        ) ||
+                        src.startsWith(
+                            "blob:"
+                        )
+                    ) {
+
+                        continue;
+
+                    }
+
+
+                    try {
+
+                        src =
+                            new URL(
+                                src,
+                                window.location.href
+                            ).href;
+
+                    }
+
+                    catch (
+                        error
+                    ) {}
+
+
+                    const dataUrl =
+                        await imageUrlToDataURL(
+                            src
+                        );
+
+
+                    if (
+                        dataUrl
+                    ) {
+
+
+                        img.removeAttribute(
+                            "crossorigin"
+                        );
+
+
+                        img.src =
+                            dataUrl;
+
+
+                        try {
+
+                            if (
+                                img.decode
+                            ) {
+
+                                await img.decode();
+
+                            }
+
+                        }
+
+                        catch (
+                            error
+                        ) {}
+
+                    }
+
+
+                    await delay(
+                        20
+                    );
+
+                }
+
+            }
+
+
+            /* =================================================
+               CREATE IMAGE
+            ================================================= */
+
+            function createPdfImage(
+                original
+            ) {
+
+
+                const img =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                img.src =
+                    original.currentSrc ||
+                    original.src;
+
+
+                img.alt =
+                    original.alt ||
+                    "";
+
+
+                Object.assign(
+                    img.style,
+                    {
+
+                        display:
+                            "block",
+
+                        width:
+                            "250px",
+
+                        height:
+                            "auto",
+
+                        margin:
+                            "0 auto"
+
+                    }
+                );
+
+
+                return img;
+
+            }
+
+
+            /* =================================================
+               CREATE PREVIEW
+            ================================================= */
+
+            function createPreview() {
+
+
+                let oldWrap =
+                    document.getElementById(
+                        "pdfPreviewWrap-1"
+                    );
+
+
+                /*
+                 * Preview đã tồn tại
+                 * => không tạo thêm
+                 */
+
+                if (
+                    oldWrap
+                ) {
+
+                    return oldWrap;
+
+                }
+
+
+                const questions =
+                    Array.from(
+                        document.querySelectorAll(
+                            ".question-item-1"
+                        )
+                    );
+
+
+                if (
+                    !questions.length
+                ) {
+
+                    alert(
+                        "Không tìm thấy câu hỏi."
+                    );
+
+                    return null;
+
+                }
+
+
+                /* =============================================
+                   WRAP
+                ============================================= */
+
+                const wrap =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                wrap.id =
+                    "pdfPreviewWrap-1";
+
+
+                document.body.appendChild(
+                    wrap
+                );
+
+
+                /*
+                 * Khóa trang phía sau
+                 */
+
+                document.body.style.overflow =
+                    "hidden";
+
+
+                /* =============================================
+                   TOOLBAR
+                ============================================= */
+
+                const toolbar =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                Object.assign(
+                    toolbar.style,
+                    {
+
+                        width:
+                            "794px",
+
+                        maxWidth:
+                            "calc(100vw - 20px)",
+
+                        margin:
+                            "0 auto 15px auto",
+
+                        display:
+                            "flex",
+
+                        justifyContent:
+                            "flex-end",
+
+                        gap:
+                            "10px",
+
+                        position:
+                            "sticky",
+
+                        top:
+                            "10px",
+
+                        zIndex:
+                            "9999"
+
+                    }
+                );
+
+
+                /* =============================================
+                   DOWNLOAD BUTTON
+                ============================================= */
+
+                const downloadBtn =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                downloadBtn.type =
+                    "button";
+
+
+                downloadBtn.textContent =
+                    "Tải PDF";
+
+
+                Object.assign(
+                    downloadBtn.style,
+                    {
+
+                        padding:
+                            "10px 18px",
+
+                        border:
+                            "0",
+
+                        borderRadius:
+                            "8px",
+
+                        background:
+                            "#2563eb",
+
+                        color:
+                            "#fff",
+
+                        fontSize:
+                            "17px",
+
+                        fontWeight:
+                            "700",
+
+                        cursor:
+                            "pointer",
+
+                        boxShadow:
+                            "0 3px 12px rgba(0,0,0,.20)"
+
+                    }
+                );
+
+
+                /* =============================================
+                   HIDE BUTTON
+                ============================================= */
+
+                const hideBtn =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                hideBtn.type =
+                    "button";
+
+
+                hideBtn.textContent =
+                    "Ẩn bản in";
+
+
+                Object.assign(
+                    hideBtn.style,
+                    {
+
+                        padding:
+                            "10px 18px",
+
+                        border:
+                            "0",
+
+                        borderRadius:
+                            "8px",
+
+                        background:
+                            "#475569",
+
+                        color:
+                            "#fff",
+
+                        fontSize:
+                            "17px",
+
+                        fontWeight:
+                            "700",
+
+                        cursor:
+                            "pointer",
+
+                        boxShadow:
+                            "0 3px 12px rgba(0,0,0,.20)"
+
+                    }
+                );
+
+
+                toolbar.appendChild(
+                    downloadBtn
+                );
+
+
+                toolbar.appendChild(
+                    hideBtn
+                );
+
+
+                wrap.appendChild(
+                    toolbar
+                );
+
+
+                /* =============================================
+                   CONTENT
+                ============================================= */
+
+                const pdfContent =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                pdfContent.id =
+                    "pdfContent-1";
+
+
+                wrap.appendChild(
+                    pdfContent
+                );
+
+
+                /* =============================================
+                   HEADER
+                ============================================= */
+
+                const header =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                header.className =
+                    "pdf-header-1";
+
+
+                header.innerHTML = `
+
+                    <div style="
+                        padding-bottom:18px;
+                        margin-bottom:20px;
+                        border-bottom:2px solid #111827;
+                    ">
+
+                        <div style="
+                            font-size:12px;
+                            font-weight:700;
+                            letter-spacing:1px;
+                            color:#64748b;
+                        ">
+                            PHIẾU ÔN LUYỆN
+                        </div>
+
+                        <div style="
+                            margin-top:4px;
+                            font-size:28px;
+                            font-weight:800;
+                        ">
+                            TOÁN LỚP 2
+                        </div>
+
+                        <div style="
+                            margin-top:5px;
+                            font-size:16px;
+                            color:#64748b;
+                        ">
+                            Bài luyện tập tổng hợp
+                        </div>
+
+                    </div>
+
+
+                    <div style="
+                        display:grid;
+                        grid-template-columns:1fr 180px;
+                        gap:30px;
+                        margin:28px 0;
+                        font-size:14px;
+                    ">
+
+                        <div>
+                            Họ và tên:
+
+                            <span style="
+                                display:inline-block;
+                                width:70%;
+                                border-bottom:1px solid #64748b;
+                            ">
+                                &nbsp;
+                            </span>
+                        </div>
+
+                        <div>
+                            Lớp:
+
+                            <span style="
+                                display:inline-block;
+                                width:100px;
+                                border-bottom:1px solid #64748b;
+                            ">
+                                &nbsp;
+                            </span>
+                        </div>
+
+                    </div>
+
+                `;
+
+
+                pdfContent.appendChild(
+                    header
+                );
+
+
+                /* =============================================
+                   QUESTIONS
+                ============================================= */
+
+                questions.forEach(
+                    function (
+                        question,
+                        index
+                    ) {
+
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        item.className =
+                            "pdf-question-item-1";
+
+
+                        /* =====================================
+                           TITLE
+                        ===================================== */
+
+                        const title =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        title.innerHTML =
+                            "<strong>Câu " +
+                            (
+                                index + 1
+                            ) +
+                            ".</strong>";
+
+
+                        title.style.fontSize =
+                            "18px";
+
+
+                        title.style.marginBottom =
+                            "7px";
+
+
+                        item.appendChild(
+                            title
+                        );
+
+
+                        /* =====================================
+                           TEXT
+                        ===================================== */
+
+                        const textSource =
+                            question.querySelector(
+                                ".question-text-1"
+                            );
+
+
+                        if (
+                            textSource
+                        ) {
+
+
+                            const text =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            text.innerHTML =
+                                textSource.innerHTML;
+
+
+                            text.style.fontSize =
+                                "18px";
+
+
+                            text.style.lineHeight =
+                                "1.6";
+
+
+                            text.style.marginBottom =
+                                "12px";
+
+
+                            item.appendChild(
+                                text
+                            );
+
+                        }
+
+
+                        /* =====================================
+                           IMAGE
+                        ===================================== */
+
+                        const originalImg =
+                            question.querySelector(
+                                ".question-image-1 img"
+                            );
+
+
+                        if (
+                            originalImg
+                        ) {
+
+
+                            const imageWrap =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            imageWrap.style.textAlign =
+                                "center";
+
+
+                            imageWrap.style.margin =
+                                "14px 0";
+
+
+                            imageWrap.appendChild(
+                                createPdfImage(
+                                    originalImg
+                                )
+                            );
+
+
+                            item.appendChild(
+                                imageWrap
+                            );
+
+                        }
+
+
+                        /* =====================================
+                           RADIO
+                        ===================================== */
+
+                        const answers =
+                            Array.from(
+                                question.querySelectorAll(
+                                    ".answer-1"
+                                )
+                            );
+
+
+                        if (
+                            answers.length
+                        ) {
+
+
+                            const answerGrid =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            Object.assign(
+                                answerGrid.style,
+                                {
+
+                                    display:
+                                        "grid",
+
+                                    gridTemplateColumns:
+                                        "1fr 1fr",
+
+                                    columnGap:
+                                        "30px",
+
+                                    rowGap:
+                                        "10px",
+
+                                    marginTop:
+                                        "12px"
+
+                                }
+                            );
+
+
+                            answers.forEach(
+                                function (
+                                    answer,
+                                    answerIndex
+                                ) {
+
+
+                                    const content =
+                                        answer.querySelector(
+                                            ".answer-content-1"
+                                        );
+
+
+                                    if (
+                                        !content
+                                    ) {
+
+                                        return;
+
+                                    }
+
+
+                                    const row =
+                                        document.createElement(
+                                            "div"
+                                        );
+
+
+                                    row.innerHTML =
+
+                                        "<strong>" +
+
+                                        String.fromCharCode(
+                                            65 +
+                                            answerIndex
+                                        ) +
+
+                                        ".</strong> " +
+
+                                        content.innerHTML;
+
+
+                                    answerGrid.appendChild(
+                                        row
+                                    );
+
+                                }
+                            );
+
+
+                            item.appendChild(
+                                answerGrid
+                            );
+
+                        }
+
+
+                        /* =====================================
+                           TEXT ANSWER
+                        ===================================== */
+
+                        if (
+                            question.querySelector(
+                                ".text-answer-input-1"
+                            )
+                        ) {
+
+
+                            const line =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            line.style.marginTop =
+                                "15px";
+
+
+                            line.innerHTML = `
+
+                                    <div style="
+                                        display:flex;
+                                        align-items:flex-end;
+                                        width:100%;
+                                        gap:8px;
+                                    ">
+
+                                        <span style="
+                                            white-space:nowrap;
+                                        ">
+                                            Trả lời:
+                                        </span>
+
+                                        <span style="
+                                            flex:1;
+                                            border-bottom:2px dotted #111827;
+                                            height:20px;
+                                        "></span>
+
+                                    </div>
+
+                                `;
+
+
+                            item.appendChild(
+                                line
+                            );
+
+                        }
+
+
+                        pdfContent.appendChild(
+                            item
+                        );
+
+                    }
+                );
+
+
+                /* =============================================
+                   MOBILE SCALE PREVIEW
+                ============================================= */
+
+                function updateScale() {
+
+
+                    if (
+                        window.innerWidth >
+                        850
+                    ) {
+
+                        pdfContent.style.transform =
+                            "";
+
+
+                        pdfContent.style.transformOrigin =
+                            "";
+
+
+                        pdfContent.style.marginBottom =
+                            "";
+
+
+                        return;
+
+                    }
+
+
+                    const scale =
+                        Math.min(
+
+                            1,
+
+                            (
+                                window.innerWidth -
+                                10
+                            ) /
+
+                            794
+
+                        );
+
+
+                    pdfContent.style.transform =
+                        "scale(" +
+                        scale +
+                        ")";
+
+
+                    pdfContent.style.transformOrigin =
+                        "top left";
+
+
+                    pdfContent.style.marginBottom =
+
+                        "-" +
+
+                        (
+                            pdfContent.offsetHeight *
+
+                            (
+                                1 -
+                                scale
+                            )
+                        ) +
+
+                        "px";
+
+                }
+
+
+                updateScale();
+
+
+                window.addEventListener(
+                    "resize",
+                    updateScale
+                );
+
+
+                /* =============================================
+                   HIDE PREVIEW
+                ============================================= */
+
+                hideBtn.addEventListener(
+                    "click",
+                    function () {
+
+
+                        /*
+                         * Gỡ resize listener
+                         */
+
+                        window.removeEventListener(
+                            "resize",
+                            updateScale
+                        );
+
+
+                        /*
+                         * Xóa preview
+                         */
+
+                        wrap.remove();
+
+
+                        /*
+                         * Mở scroll lại cho trang
+                         */
+
+                        document.body.style.overflow =
+                            "";
+
+                    }
+                );
+
+
+                /* =============================================
+                   DOWNLOAD PDF
+                ============================================= */
+
+                downloadBtn.addEventListener(
+                    "click",
+                    async function () {
+
+
+                        downloadBtn.disabled =
+                            true;
+
+
+                        downloadBtn.textContent =
+                            "Đang tạo PDF...";
+
+
+                        try {
+
+
+                            await exportPdf(
+                                pdfContent
+                            );
+
+                        }
+
+                        catch (
+                            error
+                        ) {
+
+
+                            console.error(
+                                "PDF ERROR:",
+                                error
+                            );
+
+
+                            alert(
+                                "Không tạo được PDF: " +
+                                (
+                                    error.message ||
+                                    error
+                                )
+                            );
+
+                        }
+
+                        finally {
+
+
+                            downloadBtn.disabled =
+                                false;
+
+
+                            downloadBtn.textContent =
+                                "Tải PDF";
+
+                        }
+
+                    }
+                );
+
+
+                return wrap;
+
+            }
+
+
+            /* =================================================
+               ELEMENT -> CANVAS
+            ================================================= */
+
+            async function toCanvas(
+                element
+            ) {
+
+
+                return await html2canvas(
+                    element,
+                    {
+
+                        scale:
+                            window.innerWidth <= 768
+                                ? 1.15
+                                : 1.5,
+
+                        useCORS:
+                            true,
+
+                        allowTaint:
+                            false,
+
+                        backgroundColor:
+                            "#fff",
+
+                        logging:
+                            false,
+
+                        imageTimeout:
+                            15000,
+
+                        windowWidth:
+                            794
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               EXPORT
+            ================================================= */
+
+            async function exportPdf(
+                pdfContent
+            ) {
+
+
+                checkLibraries();
+
+
+                const jsPDF =
+                    window.jspdf.jsPDF;
+
+
+                const oldTransform =
+                    pdfContent.style.transform;
+
+
+                const oldTransformOrigin =
+                    pdfContent.style.transformOrigin;
+
+
+                const oldMargin =
+                    pdfContent.style.marginBottom;
+
+
+                /*
+                 * Khi chụp PDF:
+                 * bỏ scale mobile
+                 */
+
+                pdfContent.style.transform =
+                    "none";
+
+
+                pdfContent.style.transformOrigin =
+                    "top left";
+
+
+                pdfContent.style.marginBottom =
+                    "0";
+
+
+                try {
+
+
+                    await prepareImagesForPdf(
+                        pdfContent
+                    );
+
+
+                    await waitImagesReady(
+                        pdfContent
+                    );
+
+
+                    await delay(
+                        100
+                    );
+
+
+                    const pdf =
+                        new jsPDF({
+
+                            orientation:
+                                "portrait",
+
+                            unit:
+                                "mm",
+
+                            format:
+                                "a4",
+
+                            compress:
+                                true
+
+                        });
+
+
+                    const PAGE_W =
+                        210;
+
+
+                    const PAGE_H =
+                        297;
+
+
+                    const LEFT =
+                        12;
+
+
+                    const RIGHT =
+                        12;
+
+
+                    const TOP =
+                        12;
+
+
+                    const BOTTOM =
+                        18;
+
+
+                    const CONTENT_W =
+                        PAGE_W -
+                        LEFT -
+                        RIGHT;
+
+
+                    const MAX_Y =
+                        PAGE_H -
+                        BOTTOM;
+
+
+                    let y =
+                        TOP;
+
+
+                    const blocks =
+                        [];
+
+
+                    const header =
+                        pdfContent.querySelector(
+                            ".pdf-header-1"
+                        );
+
+
+                    if (
+                        header
+                    ) {
+
+                        blocks.push(
+                            header
+                        );
+
+                    }
+
+
+                    pdfContent
+                        .querySelectorAll(
+                            ".pdf-question-item-1"
+                        )
+                        .forEach(
+                            function (
+                                item
+                            ) {
+
+                                blocks.push(
+                                    item
+                                );
+
+                            }
+                        );
+
+
+                    /* =========================================
+                       RENDER TỪNG BLOCK
+                    ========================================= */
+
+                    for (
+                        let i = 0;
+                        i < blocks.length;
+                        i++
+                    ) {
+
+
+                        const block =
+                            blocks[i];
+
+
+                        await prepareImagesForPdf(
+                            block
+                        );
+
+
+                        await waitImagesReady(
+                            block
+                        );
+
+
+                        const canvas =
+                            await toCanvas(
+                                block
+                            );
+
+
+                        if (
+                            !canvas ||
+                            !canvas.width ||
+                            !canvas.height
+                        ) {
+
+                            continue;
+
+                        }
+
+
+                        const image =
+                            canvas.toDataURL(
+                                "image/jpeg",
+                                .92
+                            );
+
+
+                        let width =
+                            CONTENT_W;
+
+
+                        let height =
+                            canvas.height *
+                            width /
+                            canvas.width;
+
+
+                        /*
+                         * Không đủ chỗ
+                         * => sang trang mới
+                         */
+
+                        if (
+                            y +
+                            height >
+                            MAX_Y &&
+                            y >
+                            TOP
+                        ) {
+
+
+                            pdf.addPage();
+
+
+                            y =
+                                TOP;
+
+                        }
+
+
+                        /*
+                         * Block cao hơn cả 1 trang
+                         */
+
+                        const maxHeight =
+                            PAGE_H -
+                            TOP -
+                            BOTTOM;
+
+
+                        if (
+                            height >
+                            maxHeight
+                        ) {
+
+
+                            const ratio =
+                                maxHeight /
+                                height;
+
+
+                            width *=
+                                ratio;
+
+
+                            height *=
+                                ratio;
+
+                        }
+
+
+                        pdf.addImage(
+
+                            image,
+
+                            "JPEG",
+
+                            LEFT,
+
+                            y,
+
+                            width,
+
+                            height,
+
+                            undefined,
+
+                            "FAST"
+
+                        );
+
+
+                        y +=
+                            height +
+                            4;
+
+
+                        /*
+                         * Giải phóng canvas
+                         */
+
+                        canvas.width =
+                            1;
+
+
+                        canvas.height =
+                            1;
+
+
+                        await delay(
+                            30
+                        );
+
+                    }
+
+
+                    /* =========================================
+                       FOOTER
+                    ========================================= */
+
+                    const pages =
+                        pdf.getNumberOfPages();
+
+
+                    for (
+                        let page = 1;
+                        page <= pages;
+                        page++
+                    ) {
+
+
+                        pdf.setPage(
+                            page
+                        );
+
+
+                        pdf.setFontSize(
+                            9
+                        );
+
+
+                        pdf.setTextColor(
+                            100,
+                            116,
+                            139
+                        );
+
+
+                        pdf.text(
+
+                            "2026 - https://hminhquan2026.blogspot.com/",
+
+                            PAGE_W / 2,
+
+                            289,
+
+                            {
+                                align:
+                                    "center"
+                            }
+
+                        );
+
+
+                        pdf.text(
+
+                            page +
+                            " / " +
+                            pages,
+
+                            PAGE_W -
+                            RIGHT,
+
+                            289,
+
+                            {
+                                align:
+                                    "right"
+                            }
+
+                        );
+
+                    }
+
+
+                    /* =========================================
+                       FILE NAME
+                    ========================================= */
+
+                    let fileName =
+                        "toan-lop-2.pdf";
+
+
+                    const subtitle =
+                        document.querySelector(
+                            ".subtitle"
+                        );
+
+
+                    if (
+                        subtitle &&
+                        subtitle.textContent.trim()
+                    ) {
+
+
+                        const clean =
+                            subtitle.textContent
+                            .trim()
+                            .normalize(
+                                "NFD"
+                            )
+                            .replace(
+                                /[\u0300-\u036f]/g,
+                                ""
+                            )
+                            .replace(
+                                /đ/g,
+                                "d"
+                            )
+                            .replace(
+                                /Đ/g,
+                                "D"
+                            )
+                            .replace(
+                                /[^a-zA-Z0-9]+/g,
+                                "-"
+                            )
+                            .replace(
+                                /^-+|-+$/g,
+                                ""
+                            )
+                            .toLowerCase();
+
+
+                        if (
+                            clean
+                        ) {
+
+                            fileName =
+                                clean +
+                                ".pdf";
+
+                        }
+
+                    }
+
+
+                    pdf.save(
+                        fileName
+                    );
+
+                }
+
+                finally {
+
+
+                    /*
+                     * Trả lại trạng thái preview
+                     */
+
+                    pdfContent.style.transform =
+                        oldTransform;
+
+
+                    pdfContent.style.transformOrigin =
+                        oldTransformOrigin;
+
+
+                    pdfContent.style.marginBottom =
+                        oldMargin;
+
+                }
+
+            }
+
+
+            /* =================================================
+               BUTTON
+            ================================================= */
+
+            showBtn.addEventListener(
+                "click",
+                function () {
+
+                    createPreview();
+
+                }
+            );
+
+
+        }
+    );
+
+})();
+  
+  
+  
+  
+ /* =========================================
+   QUIZ QUESTION PICKER
+   Lọc + đảo mảng + lấy số lượng câu hỏi
+   const quizQuestions = QuizQuestionPicker.init({
+    questions: questionsData,
+    total: 20,
+
+    conditions: {
+        made: 1,
+        type: "text",
+        dangcauhoi: 5
+    }
+});
+========================================= */
+
+(function (window) {
+    "use strict";
+
+    function shuffleArray(array) {
+
+        const result = array.slice();
+
+        for (let i = result.length - 1; i > 0; i--) {
+
+            const j =
+                Math.floor(
+                    Math.random() * (i + 1)
+                );
+
+            [
+                result[i],
+                result[j]
+            ] = [
+                result[j],
+                result[i]
+            ];
+        }
+
+        return result;
+    }
+
+
+    function matchCondition(question, conditions) {
+
+        if (!conditions) {
+            return true;
+        }
+
+        /*
+         * conditions có thể chứa:
+         *
+         * made
+         * type
+         * dangcauhoi
+         *
+         * hoặc các key khác sau này.
+         */
+
+        for (const key in conditions) {
+
+            if (
+                !Object.prototype.hasOwnProperty.call(
+                    conditions,
+                    key
+                )
+            ) {
+                continue;
+            }
+
+            const expected =
+                conditions[key];
+
+            /*
+             * Nếu điều kiện là undefined/null/""
+             * thì bỏ qua.
+             */
+
+            if (
+                expected === undefined ||
+                expected === null ||
+                expected === ""
+            ) {
+                continue;
+            }
+
+
+            /*
+             * Nếu expected là Array:
+             *
+             * type: ["text", "multi"]
+             *
+             * thì chỉ cần giá trị question[key]
+             * nằm trong array đó.
+             */
+
+            if (Array.isArray(expected)) {
+
+                if (
+                    !expected.includes(
+                        question[key]
+                    )
+                ) {
+                    return false;
+                }
+
+                continue;
+            }
+
+
+            /*
+             * Điều kiện thông thường:
+             *
+             * made: 1
+             * type: "text"
+             * dangcauhoi: 5
+             */
+
+            if (
+                question[key] !== expected
+            ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    function filterQuestions(
+        questions,
+        conditions
+    ) {
+
+        return questions.filter(
+            function (question) {
+
+                return matchCondition(
+                    question,
+                    conditions
+                );
+            }
+        );
+    }
+
+
+    window.QuizQuestionPicker = {
+
+        init: function (options) {
+
+            options =
+                options || {};
+
+
+            /* =========================
+               KIỂM TRA DATA
+            ========================= */
+
+            const sourceQuestions =
+                Array.isArray(
+                    options.questions
+                )
+                    ? options.questions
+                    : [];
+
+
+            if (
+                sourceQuestions.length === 0
+            ) {
+
+                return [];
+            }
+
+
+            /* =========================
+               LỌC THEO ĐIỀU KIỆN
+            ========================= */
+
+            let result =
+                filterQuestions(
+                    sourceQuestions,
+                    options.conditions
+                );
+
+
+            /* =========================
+               ĐẢO THỨ TỰ CÂU HỎI
+            ========================= */
+
+            result =
+                shuffleArray(result);
+
+
+            /* =========================
+               SỐ CÂU MUỐN LẤY
+            ========================= */
+
+            let total =
+                Number(options.total);
+
+
+            /*
+             * Nếu không truyền total
+             * hoặc total không hợp lệ
+             * thì lấy toàn bộ.
+             */
+
+            if (
+                !Number.isFinite(total) ||
+                total <= 0
+            ) {
+
+                total =
+                    result.length;
+            }
+
+
+            total =
+                Math.floor(total);
+
+
+            /*
+             * Nếu data > total:
+             * lấy đúng total.
+             *
+             * Nếu data < total:
+             * lấy bằng data.
+             */
+
+            total =
+                Math.min(
+                    total,
+                    result.length
+                );
+
+
+            /* =========================
+               TRẢ VỀ MẢNG ĐÃ CHỌN
+            ========================= */
+
+            return result.slice(
+                0,
+                total
+            );
+        }
+    };
+
+})(window);
+
+
+
+
+/* ================================
+   RENDER CÂU HỎI
+   Chỉ render HTML - không chấm điểm
+================================ */
+
+(function (window) {
+    "use strict";
+
+    let questions = [];
+
+    let settings = {
+        folder: "",
+        shuffleAnswers: false
+    };
+
+
+    /* ================================
+       XỬ LÝ ĐƯỜNG DẪN ẢNH
+    ================================ */
+
+    function getImageUrl(src) {
+
+        if (!src) return "";
+
+        src = String(src).trim();
+
+        if (
+            src.indexOf("http://") === 0 ||
+            src.indexOf("https://") === 0 ||
+            src.indexOf("//") === 0 ||
+            src.indexOf("data:") === 0 ||
+            src.indexOf("blob:") === 0
+        ) {
+            return src;
+        }
+
+        if (settings.folder) {
+
+            return (
+                MEDIA_URL.replace(/\/+$/, "") +
+                "/" +
+                String(settings.folder)
+                    .trim()
+                    .replace(/^\/+|\/+$/g, "") +
+                "/" +
+                src.replace(/^\/+/, "")
+            );
+        }
+
+        return (
+            MEDIA_URL.replace(/\/+$/, "") +
+            "/" +
+            src.replace(/^\/+/, "")
+        );
+    }
+
+
+    /* ================================
+       SỬA SRC ẢNH TRONG HTML
+    ================================ */
+
+    function fixImages(element) {
+
+        if (!element) return;
+
+        element
+            .querySelectorAll("img")
+            .forEach(function (img) {
+
+                const src =
+                    img.getAttribute("src");
+
+                if (src) {
+                    img.src =
+                        getImageUrl(src);
+                }
+
+            });
+    }
+
+
+    /* ================================
+       TRỘN MẢNG
+    ================================ */
+
+    function shuffleArray(array) {
+
+        const result = array.slice();
+
+        for (
+            let i = result.length - 1;
+            i > 0;
+            i--
+        ) {
+
+            const j =
+                Math.floor(
+                    Math.random() *
+                    (i + 1)
+                );
+
+            [
+                result[i],
+                result[j]
+            ] = [
+                result[j],
+                result[i]
+            ];
+        }
+
+        return result;
+    }
+
+
+    /* ================================
+       FORMAT SOLUTION
+    ================================ */
+
+    function formatSolution(value) {
+
+        if (
+            value === undefined ||
+            value === null
+        ) {
+            return "";
+        }
+
+        return String(value)
+            .replace(/\r\n/g, "\n")
+            .replace(/\r/g, "\n")
+            .replace(/\n/g, "<br>");
+    }
+
+
+    /* ================================
+       TẠO 1 CÂU HỎI
+    ================================ */
+
+    function createQuestion(
+        question,
+        index
+    ) {
+
+        const questionId =
+            index + 1;
+
+        const htmlType =
+            question.type === "text"
+                ? "text"
+                : "radio";
+
+
+        /* ================================
+           SECTION
+        ================================ */
+
+        const section =
+            document.createElement(
+                "section"
+            );
+
+        section.className =
+            "question-item-1";
+
+        section.id =
+            "question-" +
+            questionId +
+            "-1";
+
+        section.setAttribute(
+            "data-question-index",
+            questionId
+        );
+
+        section.setAttribute(
+            "data-type",
+            htmlType
+        );
+
+        section.setAttribute(
+            "data-answer",
+            question.answer ?? ""
+        );
+
+
+        /* ================================
+           TIÊU ĐỀ CÂU
+        ================================ */
+
+        const questionNumber =
+            document.createElement(
+                "h2"
+            );
+
+        questionNumber.className =
+            "question-number-1";
+
+        questionNumber.textContent =
+            "Câu " + questionId;
+
+        section.appendChild(
+            questionNumber
+        );
+
+
+        /* ================================
+           NỘI DUNG CÂU HỎI
+        ================================ */
+
+        const questionText =
+            document.createElement(
+                "div"
+            );
+
+        questionText.className =
+            "question-text-1";
+
+        questionText.innerHTML =
+            question.cauhoi || "";
+
+        fixImages(
+            questionText
+        );
+
+        section.appendChild(
+            questionText
+        );
+
+
+        /* ================================
+           ẢNH CÂU HỎI
+        ================================ */
+
+        if (
+            question.img &&
+            String(question.img).trim()
+        ) {
+
+            const imageWrap =
+                document.createElement(
+                    "div"
+                );
+
+            imageWrap.className =
+                "question-image-1";
+
+
+            const image =
+                document.createElement(
+                    "img"
+                );
+
+            image.src =
+                getImageUrl(
+                    question.img
+                );
+
+            image.alt =
+                "Hình câu " +
+                questionId;
+
+
+            imageWrap.appendChild(
+                image
+            );
+
+            section.appendChild(
+                imageWrap
+            );
+        }
+
+
+        /* ================================
+           CÂU TEXT
+        ================================ */
+
+        if (
+            question.type === "text"
+        ) {
+
+            const answerBox =
+                document.createElement(
+                    "div"
+                );
+
+            answerBox.className =
+                "text-answer-box-1";
+
+
+            const input =
+                document.createElement(
+                    "input"
+                );
+
+            input.type =
+                "text";
+
+            input.className =
+                "text-answer-input-1";
+
+            input.placeholder =
+                "Nhập đáp án...";
+
+            input.autocomplete =
+                "off";
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.type =
+                "button";
+
+            button.className =
+                "check-answer-btn-1";
+
+            button.textContent =
+                "Trả lời";
+
+
+            answerBox.appendChild(
+                input
+            );
+
+            answerBox.appendChild(
+                button
+            );
+
+            section.appendChild(
+                answerBox
+            );
+        }
+
+
+        /* ================================
+           CÂU TRẮC NGHIỆM
+        ================================ */
+
+        else {
+
+            const answersWrap =
+                document.createElement(
+                    "div"
+                );
+
+            answersWrap.className =
+                "answers-1";
+
+
+            let answers = [
+                question.answer,
+                ...(
+                    Array.isArray(
+                        question.wrong_answers
+                    )
+                        ? question.wrong_answers
+                        : []
+                )
+            ];
+
+
+            answers = [
+                ...new Set(
+                    answers
+                        .filter(
+                            function (answer) {
+
+                                return (
+                                    answer !== undefined &&
+                                    answer !== null
+                                );
+                            }
+                        )
+                        .map(String)
+                )
+            ];
+
+
+            if (
+                settings.shuffleAnswers
+            ) {
+
+                answers =
+                    shuffleArray(
+                        answers
+                    );
+            }
+
+
+            answers.forEach(
+                function (
+                    answer,
+                    answerIndex
+                ) {
+
+                    const label =
+                        document.createElement(
+                            "label"
+                        );
+
+                    label.className =
+                        "answer-1";
+
+
+                    const input =
+                        document.createElement(
+                            "input"
+                        );
+
+                    input.type =
+                        "radio";
+
+                    input.name =
+                        "question-" +
+                        questionId +
+                        "-1";
+
+                    input.value =
+                        answer;
+
+
+                    const answerLabel =
+                        document.createElement(
+                            "span"
+                        );
+
+                    answerLabel.className =
+                        "answer-label-1";
+
+                    answerLabel.textContent =
+                        String.fromCharCode(
+                            65 +
+                            answerIndex
+                        );
+
+
+                    const answerContent =
+                        document.createElement(
+                            "span"
+                        );
+
+                    answerContent.className =
+                        "answer-content-1";
+
+                    answerContent.innerHTML =
+                        answer;
+
+                    fixImages(
+                        answerContent
+                    );
+
+
+                    label.appendChild(
+                        input
+                    );
+
+                    label.appendChild(
+                        answerLabel
+                    );
+
+                    label.appendChild(
+                        answerContent
+                    );
+
+                    answersWrap.appendChild(
+                        label
+                    );
+                }
+            );
+
+
+            section.appendChild(
+                answersWrap
+            );
+        }
+
+
+        /* ================================
+           GIẢI THÍCH
+        ================================ */
+
+        const solution =
+            document.createElement(
+                "div"
+            );
+
+        solution.className =
+            "solution-1";
+
+        solution.innerHTML =
+            "<strong>Giải thích:</strong><br>" +
+            formatSolution(
+                question.solution
+            );
+
+        fixImages(
+            solution
+        );
+
+        section.appendChild(
+            solution
+        );
+
+
+        return section;
+    }
+
+
+    /* ================================
+       RENDER SIDEBAR
+    ================================ */
+
+    function renderSidebarQuestionNumbers() {
+
+        const grid =
+            document.getElementById(
+                "questionGrid-1"
+            );
+
+        if (!grid) return;
+
+
+        const questionElements =
+            document.querySelectorAll(
+                ".question-item-1"
+            );
+
+
+        grid.innerHTML = "";
+
+
+        questionElements.forEach(
+            function (
+                questionElement,
+                index
+            ) {
+
+                const questionNumber =
+                    index + 1;
+
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.type =
+                    "button";
+
+                button.className =
+                    "question-btn-1";
+
+                button.textContent =
+                    questionNumber;
+
+
+                button.setAttribute(
+                    "data-question-index",
+                    questionNumber
+                );
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        questionElement
+                            .scrollIntoView({
+                                behavior: "smooth",
+                                block: "start"
+                            });
+
+                    }
+                );
+
+
+                grid.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        /* ================================
+           STATS BAN ĐẦU
+        ================================ */
+
+        const unanswered =
+            document.getElementById(
+                "unansweredCount-1"
+            );
+
+        const answered =
+            document.getElementById(
+                "answeredCount-1"
+            );
+
+
+        if (unanswered) {
+            unanswered.textContent =
+                questionElements.length;
+        }
+
+        if (answered) {
+            answered.textContent =
+                0;
+        }
+    }
+
+
+    /* ================================
+       RENDER TOÀN BỘ
+    ================================ */
+
+    function render() {
+
+        const container =
+            document.getElementById(
+                "questionsList-1"
+            );
+
+        if (!container) {
+
+            console.error(
+                "Không tìm thấy #questionsList-1"
+            );
+
+            return;
+        }
+
+
+        container.innerHTML =
+            "";
+
+
+        questions.forEach(
+            function (
+                question,
+                index
+            ) {
+
+                container.appendChild(
+                    createQuestion(
+                        question,
+                        index
+                    )
+                );
+
+            }
+        );
+
+
+        /*
+         * Sau khi render xong câu hỏi
+         * => render số câu sidebar
+         */
+        renderSidebarQuestionNumbers();
+    }
+
+
+    /* ================================
+       PUBLIC API
+    ================================ */
+
+    window.RenderQuizHtml = {
+
+        init: function (options) {
+
+            options =
+                options || {};
+
+
+            if (
+                !Array.isArray(
+                    options.questions
+                )
+            ) {
+
+                console.error(
+                    "RenderQuizHtml.init(): questions phải là Array."
+                );
+
+                return;
+            }
+
+
+            questions =
+                options.questions.slice();
+
+
+            settings = {
+
+                folder:
+                    options.folder ||
+                    "",
+
+                shuffleAnswers:
+                    options.shuffleAnswers ===
+                    true
+            };
+
+
+            render();
+        },
+
+
+        /* ================================
+           RENDER LẠI
+        ================================ */
+
+        render: function () {
+
+            render();
+        },
+
+
+        /* ================================
+           LẤY QUESTIONS
+        ================================ */
+
+        getQuestions: function () {
+
+            return questions.slice();
+        },
+
+
+        /* ================================
+           DESTROY
+        ================================ */
+
+        destroy: function () {
+
+            const container =
+                document.getElementById(
+                    "questionsList-1"
+                );
+
+            if (container) {
+
+                container.innerHTML =
+                    "";
+            }
+
+
+            const grid =
+                document.getElementById(
+                    "questionGrid-1"
+                );
+
+            if (grid) {
+
+                grid.innerHTML =
+                    "";
+            }
+
+
+            const unanswered =
+                document.getElementById(
+                    "unansweredCount-1"
+                );
+
+            const answered =
+                document.getElementById(
+                    "answeredCount-1"
+                );
+
+
+            if (unanswered) {
+                unanswered.textContent =
+                    0;
+            }
+
+            if (answered) {
+                answered.textContent =
+                    0;
+            }
+
+
+            questions = [];
+        }
+    };
+
+
+})(window);
+  
+ const quizQuestions = QuizQuestionPicker.init({
+    questions: questionsData,
+    total: 15,
+
+});
+  
+  
+
+  var folder = "timo_k2";
+
+RenderQuizHtml.init({
+    questions: quizQuestions,
+    folder: folder,
+    shuffleAnswers: true
+});
+</script>
+</body>
+</html>
