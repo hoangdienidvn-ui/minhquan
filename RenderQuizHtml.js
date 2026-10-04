@@ -1,19 +1,4 @@
-/* ================================
-   RENDER CÂU HỎI
-   Chỉ render HTML - không chấm điểm
-================================ */
-/* ================================
-   RENDER QUIZ HTML
 
-   Chức năng:
-   - Render câu hỏi
-   - Render đáp án
-   - Render ảnh
-   - Shuffle đáp án
-   - Render sidebar số câu
-   - Mở / đóng sidebar mobile
-   - Click số câu để di chuyển
-================================ */
 /* =========================================================
    RENDER QUIZ HTML
    - Render câu hỏi
@@ -54,7 +39,7 @@
     ========================================================= */
 
     let questions = [];
-
+   const MEDIA_URL = "https://archive.org/download/";
 
     /* =========================================================
        SETTINGS
