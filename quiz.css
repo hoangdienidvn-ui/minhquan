@@ -891,10 +891,6 @@ button:focus {
         1px solid
         #bfdbfe;
 
-    border-left:
-        5px solid
-        var(--quiz-blue);
-
     border-radius:
         13px;
 
