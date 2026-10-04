@@ -5,11 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Bài tập Toán lớp 2</title>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'></script>
+ <script src='https://cdn.jsdelivr.net/gh/hoangdienidvn-ui/lophoc@main/pdf-quiz.js'></script>
+<style>
+  
+/* =========================================================
+   QUIZ UI - FULL CSS
+   Desktop + Mobile + Sidebar + PDF
+========================================================= */
 
-<style>
-  
-<style>
-  
+
+/* =========================================================
+   01. ROOT
+========================================================= */
+
+:root {
+    --quiz-primary: #4f46e5;
+    --quiz-primary-dark: #4338ca;
+    --quiz-primary-light: #eef2ff;
+
+    --quiz-blue: #0ea5e9;
+
+    --quiz-green: #16a34a;
+    --quiz-green-light: #f0fdf4;
+
+    --quiz-red: #dc2626;
+    --quiz-red-light: #fef2f2;
+
+    --quiz-orange: #f59e0b;
+
+    --quiz-text: #1e293b;
+    --quiz-text-light: #64748b;
+
+    --quiz-border: #e2e8f0;
+    --quiz-border-dark: #cbd5e1;
+
+    --quiz-bg: #f8fafc;
+    --quiz-white: #ffffff;
+
+    --quiz-radius: 10px;
+    --quiz-radius-small: 5px;
+
+    --quiz-shadow:
+        0 8px 25px rgba(15, 23, 42, .08);
+
+    --quiz-shadow-hover:
+        0 14px 35px rgba(79, 70, 229, .13);
+}
+
+
+/* =========================================================
+   02. GLOBAL
+========================================================= */
+
 * {
     box-sizing: border-box;
 }
@@ -18,24 +68,62 @@ html {
     scroll-behavior: smooth;
 }
 
+img {
+    display: block;
+
+    max-width: 100%;
+    height: auto;
+}
+
 
 /* =========================================================
-   QUIZ LAYOUT
+   03. BUTTON RESET
+========================================================= */
+
+button {
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    outline: 0;
+
+    background: none;
+
+    font: inherit;
+    color: inherit;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    box-sizing: border-box;
+}
+
+button:focus {
+    outline: none;
+}
+
+
+/* =========================================================
+   04. QUIZ LAYOUT
 ========================================================= */
 
 .quiz-container-1 {
     display: flex;
-    gap: 24px;
+    align-items: flex-start;
+
+    gap: 26px;
 
     width: 100%;
-    max-width: 1200px;
+    max-width: 1280px;
 
     margin: 0 auto;
-    padding: 20px 0;
 }
 
 .quiz-main-1 {
     flex: 1;
+
     min-width: 0;
 }
 
@@ -45,771 +133,2085 @@ html {
 
 
 /* =========================================================
-   QUESTION
+   05. QUESTION CARD
 ========================================================= */
 
 .question-item-1 {
-    margin-bottom: 20px;
-    padding: 20px;
+    position: relative;
 
-    background: #fff;
+    margin-bottom: 24px;
 
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
+    padding:
+        24px
+        24px
+        26px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #fbfcff 100%
+        );
+
+    border:
+        1px solid
+        var(--quiz-border);
+
+    border-radius:
+        var(--quiz-radius);
+
+    box-shadow:
+        var(--quiz-shadow);
 
     scroll-margin-top: 20px;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
 }
 
-.question-number-1 {
-    margin: 0 0 12px;
+.question-item-1::before {
+    content: "";
 
-    font-size: 21px;
-    color: #111827;
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 5px;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            var(--quiz-primary),
+            var(--quiz-blue)
+        );
 }
 
-.question-text-1 {
-    margin-bottom: 18px;
+.question-item-1:hover {
+    transform:
+        translateY(-2px);
 
-    font-size: 18px;
-    line-height: 1.65;
+    border-color:
+        #c7d2fe;
+
+    box-shadow:
+        var(--quiz-shadow-hover);
 }
 
 
 /* =========================================================
-   QUESTION IMAGE
+   06. QUESTION NUMBER
+========================================================= */
+
+.question-number-1 {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+
+    margin:
+        0
+        0
+        16px;
+
+    padding:
+        7px
+        15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--quiz-primary),
+            #6366f1
+        );
+
+    color: #fff;
+
+    border-radius:
+        999px;
+
+    font-size:
+        17px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1;
+
+    box-shadow:
+        0
+        5px
+        15px
+        rgba(79, 70, 229, .24);
+}
+
+
+/* =========================================================
+   07. QUESTION TEXT
+========================================================= */
+
+.question-text-1 {
+    margin-bottom:
+        20px;
+
+    color:
+        var(--quiz-text);
+
+    font-size:
+        18px;
+
+    font-weight:
+        500;
+
+    line-height:
+        1.7;
+}
+
+
+/* ENGLISH */
+
+.question-text-1 .en {
+    margin-bottom:
+        8px;
+
+    color:
+        #1e293b;
+
+    font-weight:
+        600;
+}
+
+
+/* VIETNAMESE */
+
+.question-text-1 .vi {
+    padding-top:
+        8px;
+
+    color:
+        #6f7885;
+
+    border-top:
+        1px dashed
+        #e2e8f0;
+   font-weight:
+        600;
+}
+
+
+/* =========================================================
+   08. QUESTION IMAGE
 ========================================================= */
 
 .question-image-1 {
-    margin: 15px 0;
+    display:
+        flex;
 
-    text-align: center;
+    justify-content:
+        center;
+
+    margin:
+        18px
+        0
+        22px;
 }
 
 .question-image-1 img {
-    display: block;
+    max-width:
+        min(
+            100%,
+            520px
+        );
 
-    max-width: 100%;
-    height: auto;
+    padding:
+        7px;
 
-    margin: auto;
+    background:
+        #fff;
+
+    border:
+        1px solid
+        #e2e8f0;
+
+    border-radius:
+        14px;
+
+    box-shadow:
+        0
+        7px
+        20px
+        rgba(15, 23, 42, .08);
 }
 
 
 /* =========================================================
-   ANSWERS
+   09. ANSWERS GRID
 ========================================================= */
 
 .answers-1 {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display:
+        grid;
 
-    gap: 12px;
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap:
+        13px;
 }
 
+
+/* =========================================================
+   10. ANSWER ITEM
+========================================================= */
+
 .answer-1 {
-    display: flex;
-    align-items: center;
+    display:
+        flex;
 
-    gap: 12px;
+    align-items:
+        center;
 
-    width: 100%;
-    min-height: 52px;
+    gap:
+        12px;
 
-    padding: 0 14px;
+    width:
+        100%;
 
-    box-sizing: border-box;
+    min-height:
+        62px;
 
-    background: #fff;
+    padding:
+        10px
+        14px;
 
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
+    background:
+        #fff;
 
-    cursor: pointer;
+    border:
+        1.5px solid
+        var(--quiz-border);
 
-    transition: .2s;
+    border-radius:
+        14px;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        border-color .18s ease,
+        background .18s ease;
 }
 
 .answer-1:hover {
-    background: #f8fafc;
-    border-color: #94a3b8;
+    transform:
+        translateY(-2px);
+
+    background:
+        #fafbff;
+
+    border-color:
+        #a5b4fc;
+
+    box-shadow:
+        0
+        7px
+        18px
+        rgba(79, 70, 229, .10);
 }
+
+
+/* HIDE RADIO */
 
 .answer-1 input {
-    display: none;
-}
-
-.answer-label-1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 34px;
-    height: 34px;
-
-    flex: 0 0 34px;
-
-    background: #eef2f7;
-
-    border-radius: 50%;
-
-    font-weight: bold;
-}
-
-.answer-content-1 {
-    flex: 1;
-    min-width: 0;
-
-    font-size: 17px;
-    line-height: 1.4;
+    display:
+        none;
 }
 
 
 /* =========================================================
-   ANSWER STATES
+   11. ANSWER LETTER
 ========================================================= */
 
-/* Selected */
+.answer-label-1 {
+    display:
+        flex;
 
-.answer-1.selected-1 {
-    background: #eff6ff;
-    border-color: #2563eb;
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        38px;
+
+    height:
+        38px;
+
+    flex:
+        0 0 38px;
+
+    background:
+        #eef2ff;
+
+    color:
+        var(--quiz-primary);
+
+    border:
+        1px solid
+        #c7d2fe;
+
+    border-radius:
+        11px;
+
+    font-size:
+        15px;
+
+    font-weight:
+        800;
+
+    transition:
+        transform .18s ease,
+        background .18s ease,
+        color .18s ease;
 }
 
-
-/* Correct */
-
-.answer-1.correct-1 {
-    background: #f0fdf4;
-    border-color: #16a34a;
-}
-
-.answer-1.correct-1 .answer-label-1 {
-    background: #16a34a;
-    color: #fff;
-}
-
-
-/* Wrong */
-
-.answer-1.wrong-1 {
-    background: #fef2f2;
-    border-color: #dc2626;
-}
-
-.answer-1.wrong-1 .answer-label-1 {
-    background: #dc2626;
-    color: #fff;
+.answer-1:hover
+.answer-label-1 {
+    transform:
+        scale(1.05);
 }
 
 
 /* =========================================================
-   TEXT ANSWER
+   12. ANSWER CONTENT
+========================================================= */
+
+.answer-content-1 {
+    flex:
+        1;
+
+    min-width:
+        0;
+
+    color:
+        #334155;
+
+    font-size:
+        17px;
+
+    font-weight:
+        500;
+
+    line-height:
+        1.45;
+}
+
+.answer-content-1 img {
+    max-height:
+        130px;
+
+    margin:
+        3px auto;
+
+    object-fit:
+        contain;
+}
+
+
+/* =========================================================
+   13. SELECTED
+========================================================= */
+
+.answer-1.selected-1 {
+    background:
+        var(--quiz-primary-light);
+
+    border-color:
+        var(--quiz-primary);
+
+    box-shadow:
+        0
+        0
+        0
+        3px
+        rgba(79, 70, 229, .08);
+}
+
+.answer-1.selected-1
+.answer-label-1 {
+    background:
+        var(--quiz-primary);
+
+    color:
+        #fff;
+
+    border-color:
+        var(--quiz-primary);
+}
+
+
+/* =========================================================
+   14. CORRECT ANSWER
+========================================================= */
+
+.answer-1.correct-1 {
+    background:
+        var(--quiz-green-light);
+
+    border-color:
+        var(--quiz-green);
+
+    box-shadow:
+        0
+        0
+        0
+        3px
+        rgba(22, 163, 74, .08);
+}
+
+.answer-1.correct-1
+.answer-label-1 {
+    background:
+        var(--quiz-green);
+
+    color:
+        #fff;
+
+    border-color:
+        var(--quiz-green);
+}
+
+.answer-1.correct-1
+.answer-content-1 {
+    color:
+        #166534;
+
+    font-weight:
+        650;
+}
+
+
+/* =========================================================
+   15. WRONG ANSWER
+========================================================= */
+
+.answer-1.wrong-1 {
+    background:
+        var(--quiz-red-light);
+
+    border-color:
+        var(--quiz-red);
+
+    box-shadow:
+        0
+        0
+        0
+        3px
+        rgba(220, 38, 38, .07);
+}
+
+.answer-1.wrong-1
+.answer-label-1 {
+    background:
+        var(--quiz-red);
+
+    color:
+        #fff;
+
+    border-color:
+        var(--quiz-red);
+}
+
+.answer-1.wrong-1
+.answer-content-1 {
+    color:
+        #991b1b;
+
+    font-weight:
+        650;
+}
+
+
+/* =========================================================
+   16. TEXT ANSWER
 ========================================================= */
 
 .text-answer-box-1 {
-    display: flex;
-    align-items: stretch;
+    display:
+        flex;
 
-    gap: 10px;
+    align-items:
+        stretch;
 
-    width: 100%;
+    gap:
+        11px;
 
-    margin-top: 15px;
+    width:
+        100%;
+
+    margin-top:
+        16px;
 }
 
 .text-answer-input-1 {
-    flex: 1 1 auto;
+    flex:
+        1 1 auto;
 
-    min-width: 0;
-    height: 52px;
+    min-width:
+        0;
 
-    padding: 0 14px;
+    height:
+        56px;
 
-    box-sizing: border-box;
+    padding:
+        0
+        17px;
 
-    background: #fff;
+    background:
+        #fff;
 
-    border: 1px solid #cbd5e1;
-    border-radius: 9px;
+    color:
+        var(--quiz-text);
 
-    font-size: 17px;
+    border:
+        1.5px solid
+        var(--quiz-border-dark);
+
+    border-radius:
+        12px;
+
+    font-size:
+        17px;
+
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+}
+
+.text-answer-input-1::placeholder {
+    color:
+        #94a3b8;
+}
+
+.text-answer-input-1:hover {
+    border-color:
+        #a5b4fc;
 }
 
 .text-answer-input-1:focus {
-    outline: none;
+    outline:
+        none;
 
-    border-color: #2563eb;
+    border-color:
+        var(--quiz-primary);
 
     box-shadow:
-        0 0 0 3px
-        rgba(37, 99, 235, .10);
+        0
+        0
+        0
+        4px
+        rgba(79, 70, 229, .09);
 }
 
+
+/* =========================================================
+   17. TEXT ANSWER STATE
+========================================================= */
+
 .text-answer-input-1.correct-1 {
-    background: #f0fdf4;
-    border-color: #16a34a;
+    background:
+        var(--quiz-green-light);
+
+    color:
+        #166534;
+
+    border-color:
+        var(--quiz-green);
 }
 
 .text-answer-input-1.wrong-1 {
-    background: #fef2f2;
-    border-color: #dc2626;
+    background:
+        var(--quiz-red-light);
+
+    color:
+        #991b1b;
+
+    border-color:
+        var(--quiz-red);
 }
 
 
 /* =========================================================
-   CHECK BUTTON
+   18. CHECK ANSWER BUTTON
 ========================================================= */
 
 .check-answer-btn-1 {
-    min-width: 105px;
-    height: 52px;
+    display:
+        inline-flex;
 
-    padding: 0 17px;
+    align-items:
+        center;
 
-    box-sizing: border-box;
+    justify-content:
+        center;
 
-    background: #2563eb;
-    color: #fff;
+    min-width:
+        120px;
 
-    border: 0;
-    border-radius: 9px;
+    height:
+        56px;
 
-    font-size: 16px;
-    font-weight: 600;
+    padding:
+        0
+        20px;
 
-    cursor: pointer;
+    background:
+        linear-gradient(
+            135deg,
+            var(--quiz-primary),
+            #6366f1
+        );
+
+    color:
+        #fff;
+
+    border-radius:
+        12px;
+
+    font-size:
+        16px;
+
+    font-weight:
+        700;
+
+    box-shadow:
+        0
+        6px
+        16px
+        rgba(79, 70, 229, .23);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
 }
 
 .check-answer-btn-1:hover {
-    background: #1d4ed8;
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0
+        9px
+        22px
+        rgba(79, 70, 229, .29);
+}
+
+.check-answer-btn-1:active {
+    transform:
+        translateY(0);
 }
 
 
 /* =========================================================
-   LOCKED / DISABLED
+   19. ANSWERED / DISABLED
 ========================================================= */
 
-.question-item-1.answered-1 .answer-1 {
-    pointer-events: none;
-    cursor: default;
+.question-item-1.answered-1
+.answer-1 {
+    pointer-events:
+        none;
+
+    cursor:
+        default;
 }
 
 .text-answer-input-1:disabled {
-    opacity: 1;
+    opacity:
+        1;
 
-    color: #222;
+    color:
+        #334155;
 
-    cursor: not-allowed;
+    cursor:
+        not-allowed;
 
-    -webkit-text-fill-color: #222;
+    -webkit-text-fill-color:
+        #334155;
 }
 
 .check-answer-btn-1:disabled {
-    opacity: 1;
+    opacity:
+        1;
 
-    background: #94a3b8;
-    color: #fff;
+    background:
+        #94a3b8;
 
-    cursor: not-allowed;
+    color:
+        #fff;
+
+    cursor:
+        not-allowed;
+
+    box-shadow:
+        none;
+
+    transform:
+        none;
 }
 
 
 /* =========================================================
-   SOLUTION
+   20. SOLUTION
 ========================================================= */
 
 .solution-1 {
-    display: none;
+    display:
+        none;
 
-    margin-top: 16px;
-    padding: 14px 16px;
+    margin-top:
+        19px;
 
-    background: #eff6ff;
+    padding:
+        17px
+        18px;
 
-    border-left: 4px solid #2563eb;
-    border-radius: 8px;
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f0f9ff
+        );
 
-    font-size: 16px;
-    line-height: 1.65;
+    color:
+        #334155;
+
+    border:
+        1px solid
+        #bfdbfe;
+
+    border-left:
+        5px solid
+        var(--quiz-blue);
+
+    border-radius:
+        13px;
+
+    font-size:
+        16px;
+
+    line-height:
+        1.7;
+}
+
+.solution-1 strong {
+    color:
+        #1d4ed8;
 }
 
 .solution-1.show-1 {
-    display: block;
+    display:
+        block;
+
+    animation:
+        solutionShow
+        .25s ease;
+}
+
+@keyframes solutionShow {
+
+    from {
+        opacity:
+            0;
+
+        transform:
+            translateY(-5px);
+    }
+
+    to {
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
+    }
 }
 
 
 /* =========================================================
-   SIDEBAR
+   21. SIDEBAR
 ========================================================= */
 
 .quiz-sidebar-1 {
-    position: sticky;
-    top: 15px;
+    position:
+        sticky;
 
-    align-self: flex-start;
+    top:
+        16px;
 
-    width: 280px;
+    align-self:
+        flex-start;
 
-    flex: 0 0 280px;
+    width:
+        290px;
 
-    padding: 18px;
+    flex:
+        0 0 290px;
 
-    background: #fff;
+    padding:
+        21px;
 
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-}
+    background:
+        linear-gradient(
+            180deg,
+            #fff,
+            #fbfcff
+        );
 
-.sidebar-title-1 {
-    margin: 0 0 18px;
+    border:
+        1px solid
+        var(--quiz-border);
 
-    text-align: center;
+    border-radius:
+        10px;
 
-    font-size: 20px;
-}
-
-.quiz-close-btn-1 {
-    display: none;
+    box-shadow:
+        0
+        10px
+        30px
+        rgba(15, 23, 42, .08);
 }
 
 
 /* =========================================================
-   STATS
+   22. SIDEBAR TITLE
+========================================================= */
+
+.sidebar-title-1 {
+    position:
+        relative;
+
+    margin:
+        0
+        0
+        20px;
+
+    padding-bottom:
+        13px;
+
+    color:
+        var(--quiz-text);
+
+    text-align:
+        center;
+
+    font-size:
+        20px;
+
+    font-weight:
+        800;
+}
+
+.sidebar-title-1::after {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    bottom:
+        0;
+
+    width:
+        52px;
+
+    height:
+        4px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            to right,
+            var(--quiz-primary),
+            var(--quiz-blue)
+        );
+
+    border-radius:
+        99px;
+}
+
+
+/* =========================================================
+   23. STATS
 ========================================================= */
 
 .stats-1 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display:
+        grid;
 
-    gap: 10px;
+    grid-template-columns:
+        1fr
+        1fr;
 
-    margin-bottom: 18px;
+    gap:
+        10px;
+
+    margin-bottom:
+        20px;
 }
 
 .stat-1 {
-    padding: 10px 6px;
+    padding:
+        12px
+        6px;
 
-    background: #f8fafc;
+    background:
+        #f8fafc;
 
-    border-radius: 10px;
+    border:
+        1px solid
+        #e2e8f0;
 
-    text-align: center;
+    border-radius:
+        12px;
+
+    text-align:
+        center;
 }
 
 .stat-number-1 {
-    display: block;
+    display:
+        block;
 
-    font-size: 22px;
-    font-weight: bold;
+    color:
+        var(--quiz-primary);
+
+    font-size:
+        24px;
+
+    font-weight:
+        800;
+
+    line-height:
+        1;
 }
 
 .stat-label-1 {
-    display: block;
+    display:
+        block;
 
-    margin-top: 3px;
+    margin-top:
+        6px;
 
-    font-size: 15px;
-    color: #475569;
+    color:
+        var(--quiz-text-light);
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
 }
 
 
 /* =========================================================
-   QUESTION GRID
+   24. QUESTION GRID
 ========================================================= */
 
 .question-grid-1 {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display:
+        grid;
 
-    gap: 8px;
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(0, 1fr)
+        );
+
+    gap:
+        8px;
 }
 
 .question-btn-1 {
-    min-width: 0;
+    display:
+        flex;
 
-    aspect-ratio: 1;
+    align-items:
+        center;
 
-    background: #fff;
+    justify-content:
+        center;
 
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
+    min-width:
+        0;
 
-    font-size: 14px;
-    font-weight: bold;
+    aspect-ratio:
+        1;
 
-    cursor: pointer;
+    background:
+        #fff;
+
+    color:
+        #475569;
+
+    border:
+        1.5px solid
+        var(--quiz-border);
+
+    border-radius:
+        10px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        800;
+
+    transition:
+        transform .15s ease,
+        background .15s ease,
+        color .15s ease,
+        border-color .15s ease,
+        box-shadow .15s ease;
 }
 
 .question-btn-1:hover {
-    border-color: #2563eb;
+    transform:
+        translateY(-2px);
+
+    background:
+        var(--quiz-primary-light);
+
+    color:
+        var(--quiz-primary);
+
+    border-color:
+        #a5b4fc;
+
+    box-shadow:
+        0
+        4px
+        10px
+        rgba(79, 70, 229, .13);
 }
+
+
+/* CURRENT */
 
 .question-btn-1.current-1 {
-    outline: 2px solid #2563eb;
+    background:
+        var(--quiz-primary-light);
+
+    color:
+        var(--quiz-primary);
+
+    border-color:
+        var(--quiz-primary);
+
+    outline:
+        none;
+
+    box-shadow:
+        0
+        0
+        0
+        3px
+        rgba(79, 70, 229, .09);
 }
+
+
+/* CORRECT */
 
 .question-btn-1.correct-1 {
-    background: #16a34a;
-    color: #fff;
+    background:
+        var(--quiz-green);
 
-    border-color: #16a34a;
+    color:
+        #fff;
 
-    outline: none;
+    border-color:
+        var(--quiz-green);
+
+    outline:
+        none;
 }
 
+
+/* WRONG */
+
 .question-btn-1.wrong-1 {
-    background: #dc2626;
-    color: #fff;
+    background:
+        var(--quiz-red);
 
-    border-color: #dc2626;
+    color:
+        #fff;
 
-    outline: none;
+    border-color:
+        var(--quiz-red);
+
+    outline:
+        none;
 }
 
 
 /* =========================================================
-   LEGEND
+   25. LEGEND
 ========================================================= */
 
 .legend-1 {
-    display: grid;
+    display:
+        grid;
 
-    gap: 8px;
+    gap:
+        9px;
 
-    margin-top: 20px;
-    padding-top: 16px;
+    margin-top:
+        20px;
 
-    border-top: 1px solid #eee;
+    padding-top:
+        17px;
+
+    border-top:
+        1px solid
+        var(--quiz-border);
 }
 
 .legend-item-1 {
-    display: flex;
-    align-items: center;
+    display:
+        flex;
 
-    gap: 8px;
+    align-items:
+        center;
 
-    font-size: 14px;
+    gap:
+        8px;
+
+    color:
+        #64748b;
+
+    font-size:
+        13px;
 }
 
 .legend-box-1 {
-    width: 18px;
-    height: 18px;
+    width:
+        18px;
 
-    background: #fff;
+    height:
+        18px;
 
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
+    flex:
+        0 0 18px;
+
+    background:
+        #fff;
+
+    border:
+        1.5px solid
+        #cbd5e1;
+
+    border-radius:
+        5px;
 }
 
 .legend-box-1.correct-1 {
-    background: #16a34a;
-    border-color: #16a34a;
+    background:
+        var(--quiz-green);
+
+    border-color:
+        var(--quiz-green);
 }
 
 .legend-box-1.wrong-1 {
-    background: #dc2626;
-    border-color: #dc2626;
+    background:
+        var(--quiz-red);
+
+    border-color:
+        var(--quiz-red);
 }
 
 
 /* =========================================================
-   MOBILE MENU BUTTON
+   26. SIDEBAR BUTTON DEFAULT
+   DESKTOP = HIDE
 ========================================================= */
 
 .open-menu-btn-1 {
-    display: none;
+    display:
+        none;
+}
+
+.quiz-close-btn-1 {
+    display:
+        none;
 }
 
 
 /* =========================================================
-   PDF BUTTON
+   27. PRINT BUTTON
 ========================================================= */
 
 .print-button-wrap {
-    display: flex;
-    justify-content: center;
+    display:
+        flex;
 
-    margin-top: 20px;
+    justify-content:
+        center;
+
+    margin-top:
+        22px;
 }
 
 #showPrintPreview-1 {
-    padding: 12px 24px;
+    display:
+        flex;
 
-    border: none;
-    border-radius: 8px;
+    align-items:
+        center;
 
-    font-size: 16px;
-    font-weight: 600;
+    justify-content:
+        center;
 
-    cursor: pointer;
+    width:
+        100%;
+
+    min-height:
+        48px;
+
+    padding:
+        10px
+        18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #334155
+        );
+
+    color:
+        #fff;
+
+    border-radius:
+        11px;
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+    box-shadow:
+        0
+        6px
+        15px
+        rgba(15, 23, 42, .18);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+#showPrintPreview-1:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0
+        9px
+        20px
+        rgba(15, 23, 42, .23);
 }
 
 
 /* =========================================================
-   PDF PREVIEW
+   28. PDF PREVIEW
 ========================================================= */
 
 #pdfPreviewWrap-1 {
-    position: fixed;
+    position:
+        fixed;
 
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset:
+        0;
 
-    width: 100vw;
-    height: 100vh;
+    width:
+        100vw;
 
-    margin: 0;
-    padding: 30px 15px 60px;
+    height:
+        100vh;
 
-    overflow-x: auto;
-    overflow-y: auto;
+    margin:
+        0;
 
-    box-sizing: border-box;
+    padding:
+        30px
+        15px
+        60px;
 
-    background: #525659;
+    overflow-x:
+        auto;
 
-    border: 0;
+    overflow-y:
+        auto;
 
-    z-index: 99999;
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            .94
+        );
+
+    border:
+        0;
+
+    z-index:
+        99999;
 }
 
 #pdfContent-1 {
-    width: 794px;
-    min-height: 1123px;
+    width:
+        794px;
 
-    margin: 0 auto;
-    padding: 38px 42px;
+    min-height:
+        1123px;
 
-    box-sizing: border-box;
+    margin:
+        0 auto;
 
-    background: #fff;
-    color: #111827;
+    padding:
+        38px
+        42px;
 
-    font-size: 18px;
-    line-height: 1.55;
+    background:
+        #fff;
+
+    color:
+        #111827;
+
+    font-size:
+        18px;
+
+    line-height:
+        1.55;
 
     box-shadow:
-        0 8px 30px
-        rgba(0, 0, 0, .14);
+        0
+        15px
+        45px
+        rgba(0, 0, 0, .30);
 }
 
 .pdf-question-item-1 {
-    padding-bottom: 10px;
+    padding-bottom:
+        10px;
 
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside:
+        avoid;
+
+    page-break-inside:
+        avoid;
 }
 
 
 /* =========================================================
-   MOBILE
+   29. TABLET
 ========================================================= */
 
-@media (max-width: 768px) {
-
-    /* -----------------------------------------
-       QUIZ LAYOUT
-    ----------------------------------------- */
+@media (
+    min-width: 769px
+)
+and (
+    max-width: 1050px
+) {
 
     .quiz-container-1 {
-        display: block;
+        gap:
+            18px;
+
     }
 
+    .quiz-sidebar-1 {
+        width:
+            250px;
 
-    /* -----------------------------------------
-       QUESTION
-    ----------------------------------------- */
+        flex-basis:
+            250px;
 
-    .question-item-1 {
-        margin-bottom: 15px;
-        padding: 15px;
-
-        border-radius: 11px;
+        padding:
+            17px;
     }
 
-    .question-number-1 {
-        font-size: 20px;
+    .question-grid-1 {
+        grid-template-columns:
+            repeat(
+                5,
+                1fr
+            );
     }
-
-    .question-text-1 {
-        font-size: 18px;
-    }
-
-
-    /* -----------------------------------------
-       ANSWERS
-    ----------------------------------------- */
 
     .answers-1 {
-        grid-template-columns: 1fr;
+        gap:
+            10px;
+    }
+}
+
+
+/* =========================================================
+   30. MOBILE
+========================================================= */
+
+@media (
+    max-width: 768px
+) {
+
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+
+    .quiz-container-1 {
+        display:
+            block;
+
+        width:
+            100%;
+
+  }
+
+    /* =====================================================
+       QUESTION CARD
+    ===================================================== */
+
+    .question-item-1 {
+        margin-bottom:
+            16px;
+
+        padding:
+            18px
+            15px
+            20px;
+
+        border-radius:
+            0px;
+
+        box-shadow:
+            0
+            5px
+            16px
+            rgba(15, 23, 42, .07);
+    }
+
+    .question-item-1:hover {
+        transform:
+            none;
+    }
+
+    .question-item-1::before {
+        width:
+            4px;
+    }
+
+
+    /* =====================================================
+       QUESTION NUMBER
+    ===================================================== */
+
+    .question-number-1 {
+        min-height:
+            34px;
+
+        margin-bottom:
+            13px;
+
+        padding:
+            6px
+            12px;
+
+        font-size:
+            16px;
+    }
+
+
+    /* =====================================================
+       QUESTION TEXT
+    ===================================================== */
+
+    .question-text-1 {
+        margin-bottom:
+            16px;
+
+        font-size:
+            17px;
+
+        line-height:
+            1.65;
+    }
+
+
+    /* =====================================================
+       IMAGE
+    ===================================================== */
+
+    .question-image-1 {
+        margin:
+            15px
+            0
+            18px;
+    }
+
+    .question-image-1 img {
+        max-width:
+            100%;
+
+        border-radius:
+            11px;
+    }
+
+
+    /* =====================================================
+       ANSWERS
+    ===================================================== */
+
+    .answers-1 {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            10px;
     }
 
     .answer-1 {
-        width: 100%;
+        min-height:
+            58px;
 
-        padding: 0 14px;
+        padding:
+            9px
+            12px;
 
-        box-sizing: border-box;
+        border-radius:
+            12px;
+    }
+
+    .answer-1:hover {
+        transform:
+            none;
+    }
+
+    .answer-label-1 {
+        width:
+            36px;
+
+        height:
+            36px;
+
+        flex:
+            0 0 36px;
+
+        border-radius:
+            10px;
     }
 
     .answer-content-1 {
-        font-size: 17px;
+        font-size:
+            16px;
     }
 
 
-    /* -----------------------------------------
-       TEXT ANSWER + BUTTON
-    ----------------------------------------- */
+    /* =====================================================
+       TEXT ANSWER
+    ===================================================== */
 
     .text-answer-box-1 {
-        flex-direction: column;
+        flex-direction:
+            column;
 
-        width: 100%;
+        gap:
+            9px;
 
-        gap: 10px;
-    }
-
-    .text-answer-input-1,
-    .check-answer-btn-1 {
-        width: 100%;
-        height: 56px;
-        min-height: 56px;
-
-        box-sizing: border-box;
+        width:
+            100%;
     }
 
     .text-answer-input-1 {
-        padding: 0 16px;
+        width:
+            100%;
 
-        font-size: 18px;
+        height:
+            54px;
+
+        padding:
+            0
+            15px;
+
+        font-size:
+            16px;
     }
 
     .check-answer-btn-1 {
-        padding: 0 16px;
+        width:
+            100%;
 
-        font-size: 17px;
+        min-width:
+            0;
+
+        height:
+            54px;
+
+        font-size:
+            16px;
+    }
+
+    .check-answer-btn-1:hover {
+        transform:
+            none;
     }
 
 
-    /* -----------------------------------------
-       MOBILE MENU BUTTON
-    ----------------------------------------- */
+    /* =====================================================
+       SOLUTION
+    ===================================================== */
+
+    .solution-1 {
+        margin-top:
+            16px;
+
+        padding:
+            15px
+            15px
+            15px
+            17px;
+
+        font-size:
+            15px;
+
+        border-radius:
+            11px;
+    }
+
+
+    /* =====================================================
+       OPEN SIDEBAR BUTTON
+    ===================================================== */
 
     .open-menu-btn-1 {
-        display: flex;
+        display:
+            flex;
 
-        position: fixed;
-        right: 14px;
-        bottom: 18px;
+        position:
+            fixed;
 
-        align-items: center;
-        justify-content: center;
+        right:
+            16px;
 
-        width: 54px;
-        height: 54px;
+        bottom:
+            18px;
 
-        background: #2563eb;
-        color: #fff;
+        align-items:
+            center;
 
-        border: none;
-        border-radius: 50%;
+        justify-content:
+            center;
 
-        font-size: 22px;
+        width:
+            58px;
+
+        height:
+            58px;
+
+        padding:
+            0;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--quiz-primary),
+                #6366f1
+            );
+
+        color:
+            #fff;
+
+        border:
+            3px solid
+            rgba(255, 255, 255, .95);
+
+        border-radius:
+            50%;
+
+        font-size:
+            23px;
+
+        font-weight:
+            700;
+
+        line-height:
+            1;
 
         box-shadow:
-            0 5px 18px
-            rgba(0, 0, 0, .2);
+            0
+            9px
+            24px
+            rgba(79, 70, 229, .35);
 
-        cursor: pointer;
+        cursor:
+            pointer;
 
-        z-index: 999;
+        z-index:
+            9998;
     }
 
 
-    /* -----------------------------------------
+    /* =====================================================
        MOBILE SIDEBAR
-    ----------------------------------------- */
+    ===================================================== */
 
     .quiz-sidebar-1 {
-        position: fixed;
+        position:
+            fixed;
 
-        top: 0;
-        right: -100%;
+        top:
+            0;
 
-        width: min(330px, 90vw);
-        height: 100vh;
+        right:
+            -100%;
 
-        padding: 18px;
+        left:
+            auto;
 
-        overflow-y: auto;
+        width:
+            min(
+                340px,
+                92vw
+            );
 
-        border-radius: 0;
+        height:
+            100vh;
 
-        transition: right .28s ease;
+        height:
+            100dvh;
+
+        max-height:
+            100vh;
+
+        max-height:
+            100dvh;
+
+        margin:
+            0;
+
+        padding:
+            16px
+            18px
+            28px;
+
+        overflow-x:
+            hidden;
+
+        overflow-y:
+            auto;
+
+        overscroll-behavior:
+            contain;
+
+        background:
+            #fff;
+
+        border:
+            0;
+
+        border-radius:
+           0px;
 
         box-shadow:
-            -5px 0 20px
-            rgba(0, 0, 0, .12);
+            -10px
+            0
+            35px
+            rgba(15, 23, 42, .22);
 
-        z-index: 9999;
+        transform:
+            translateZ(0);
+
+        transition:
+            right
+            .28s
+            ease;
+
+        z-index:
+            9999;
     }
+
+
+    /* SIDEBAR OPEN */
 
     .quiz-sidebar-1.open-1 {
-        right: 0;
+        right:
+            0;
     }
+
+
+    /* =====================================================
+       CLOSE BUTTON
+    ===================================================== */
 
     .quiz-close-btn-1 {
-        display: flex;
+        display:
+            flex;
 
-        align-items: center;
-        justify-content: center;
+        align-items:
+            center;
 
-        width: 40px;
-        height: 40px;
+        justify-content:
+            center;
 
-        margin-left: auto;
+        width:
+            42px;
 
-        background: transparent;
+        height:
+            42px;
 
-        border: 0;
+        margin-left:
+            auto;
 
-        font-size: 30px;
+        margin-bottom:
+            5px;
 
-        cursor: pointer;
+        padding:
+            0;
+
+        background:
+            #f1f5f9;
+
+        color:
+            #475569;
+
+        border:
+            1px solid
+            #e2e8f0;
+
+        border-radius:
+            50%;
+
+        font-size:
+            28px;
+
+        font-weight:
+            400;
+
+        line-height:
+            1;
+
+        cursor:
+            pointer;
+
+        z-index:
+            10001;
+    }
+
+    .quiz-close-btn-1:active {
+        background:
+            #fee2e2;
+
+        color:
+            var(--quiz-red);
     }
 
 
-    /* -----------------------------------------
-       PDF MOBILE
-    ----------------------------------------- */
+    /* =====================================================
+       SIDEBAR TITLE
+    ===================================================== */
+
+    .sidebar-title-1 {
+        margin-top:
+            5px;
+
+        margin-bottom:
+            18px;
+
+        font-size:
+            19px;
+    }
+
+
+    /* =====================================================
+       STATS
+    ===================================================== */
+
+    .stats-1 {
+        gap:
+            8px;
+
+        margin-bottom:
+            17px;
+    }
+
+    .stat-1 {
+        padding:
+            11px
+            5px;
+    }
+
+    .stat-number-1 {
+        font-size:
+            22px;
+    }
+
+    .stat-label-1 {
+        font-size:
+            12px;
+    }
+
+
+    /* =====================================================
+       QUESTION GRID
+    ===================================================== */
+
+    .question-grid-1 {
+        grid-template-columns:
+            repeat(
+                5,
+                minmax(0, 1fr)
+            );
+
+        gap:
+            8px;
+    }
+
+    .question-btn-1 {
+        font-size:
+            13px;
+
+        border-radius:
+            9px;
+    }
+
+    .question-btn-1:hover {
+        transform:
+            none;
+    }
+
+
+    /* =====================================================
+       LEGEND
+    ===================================================== */
+
+    .legend-1 {
+        margin-top:
+            18px;
+
+        padding-top:
+            15px;
+    }
+
+
+    /* =====================================================
+       PRINT BUTTON
+    ===================================================== */
+
+    #showPrintPreview-1 {
+        min-height:
+            50px;
+    }
+
+
+    /* =====================================================
+       PDF
+    ===================================================== */
 
     #pdfPreviewWrap-1 {
-        padding: 15px 0;
+        padding:
+            15px
+            0;
     }
 
     #pdfContent-1 {
-        box-shadow: none;
+        box-shadow:
+            none;
 
-        transform-origin: top left;
+        transform-origin:
+            top left;
     }
 }
-img {
-   max-width: 100%;
-    height: auto;
-    display: block;
+
+
+/* =========================================================
+   31. SMALL MOBILE
+========================================================= */
+
+@media (
+    max-width: 420px
+) {
+
+    .question-item-1 {
+        padding:
+            16px
+            12px
+            18px;
+    }
+
+    .question-text-1 {
+        font-size:
+            16px;
+    }
+
+    .answer-content-1 {
+        font-size:
+            15.5px;
+    }
+
+    .quiz-sidebar-1 {
+        width:
+            94vw;
+
+        border-radius:
+            16px
+            0
+            0
+            16px;
+    }
+
+    .question-grid-1 {
+        gap:
+            7px;
+    }
+
+    .open-menu-btn-1 {
+        right:
+            12px;
+
+        bottom:
+            14px;
+
+        width:
+            55px;
+
+        height:
+            55px;
+    }
 }
 </style>
-</style>
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 </head>
-
 <body>
-
 <button
     type="button"
     class="open-menu-btn-1"
@@ -974,6 +2376,7 @@ img {
 
 
 <script>
+    const MEDIA_URL = "https://archive.org/download/";
 const questionsData = [
     {
         "made": 1,
@@ -1072,1834 +2475,983 @@ const questionsData = [
         solution: "Đáp án đúng : 4 hình\n(3 hình đơn, 1 hình đôi)"
     }
 ];
-
-
-
-const MEDIA_URL = "https://archive.org/download/";
-
+  
+  
+  
 (function () {
 
     "use strict";
-
 
     document.addEventListener(
         "DOMContentLoaded",
         function () {
 
 
-            const showBtn =
-                document.getElementById(
-                    "showPrintPreview-1"
+            const questions =
+                Array.from(
+                    document.querySelectorAll(
+                        ".question-item-1"
+                    )
                 );
 
 
             /*
-             * Trang không có nút PDF
+             * Trang không có quiz
              * => không chạy
              */
-
-            if (!showBtn) {
+            if (!questions.length) {
                 return;
             }
 
 
-            /* =================================================
-               DELAY
-            ================================================= */
-
-            function delay(ms) {
-
-                return new Promise(
-                    function (resolve) {
-
-                        setTimeout(
-                            resolve,
-                            ms
-                        );
-
-                    }
+            const grid =
+                document.getElementById(
+                    "questionGrid-1"
                 );
 
-            }
+            const answeredCount =
+                document.getElementById(
+                    "answeredCount-1"
+                );
+
+            const unansweredCount =
+                document.getElementById(
+                    "unansweredCount-1"
+                );
+
+            const sidebar =
+                document.getElementById(
+                    "quizSidebar-1"
+                );
+
+            const openMenu =
+                document.getElementById(
+                    "openQuizMenu-1"
+                );
+
+            const closeMenu =
+                document.getElementById(
+                    "closeQuizMenu-1"
+                );
 
 
-            /* =================================================
-               CHECK LIBRARY
-            ================================================= */
-
-            function checkLibraries() {
-
-
-                if (
-                    typeof html2canvas ===
-                    "undefined"
-                ) {
-
-                    throw new Error(
-                        "html2canvas chưa được tải."
-                    );
-
-                }
-
-
-                if (
-                    !window.jspdf ||
-                    !window.jspdf.jsPDF
-                ) {
-
-                    throw new Error(
-                        "jsPDF chưa được tải."
-                    );
-
-                }
-
-            }
-
-
-            /* =================================================
-               WAIT IMAGE
-            ================================================= */
-
-            async function waitImagesReady(
-                root
+            if (
+                !grid ||
+                !answeredCount ||
+                !unansweredCount
             ) {
 
+                return;
 
-                const images =
-                    Array.from(
-                        root.querySelectorAll(
-                            "img"
-                        )
-                    );
+            }
 
 
-                await Promise.all(
+            let isSidebarScrolling =
+                false;
 
-                    images.map(
-                        function (img) {
+            let scrollTimer =
+                null;
+
+
+            /* =================================================
+               GRID
+            ================================================= */
+
+            questions.forEach(
+                function (
+                    question,
+                    index
+                ) {
+
+
+                    const button =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    button.type =
+                        "button";
+
+                    button.className =
+                        "question-btn-1";
+
+                    button.textContent =
+                        index + 1;
+
+                    button.dataset.question =
+                        index + 1;
+
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+
+                            const number =
+                                index + 1;
+
+
+                            setActiveQuestion(
+                                number
+                            );
+
+
+                            isSidebarScrolling =
+                                true;
+
+
+                            const top =
+                                question
+                                .getBoundingClientRect()
+                                .top +
+
+                                window.pageYOffset -
+
+                                15;
+
+
+                            window.scrollTo({
+
+                                top:
+                                    top,
+
+                                behavior:
+                                    "smooth"
+
+                            });
 
 
                             if (
-                                img.complete &&
-                                img.naturalWidth > 0
+                                window.innerWidth <= 768 &&
+                                sidebar
                             ) {
 
-
-                                if (
-                                    img.decode
-                                ) {
-
-                                    return img
-                                        .decode()
-                                        .catch(
-                                            function () {}
-                                        );
-
-                                }
-
-
-                                return Promise.resolve();
-
-                            }
-
-
-                            return new Promise(
-                                function (
-                                    resolve
-                                ) {
-
-
-                                    let done =
-                                        false;
-
-
-                                    function finish() {
-
-
-                                        if (done) {
-                                            return;
-                                        }
-
-
-                                        done =
-                                            true;
-
-
-                                        resolve();
-
-                                    }
-
-
-                                    img.addEventListener(
-                                        "load",
-                                        finish,
-                                        {
-                                            once:
-                                                true
-                                        }
+                                sidebar
+                                    .classList
+                                    .remove(
+                                        "open-1"
                                     );
 
-
-                                    img.addEventListener(
-                                        "error",
-                                        finish,
-                                        {
-                                            once:
-                                                true
-                                        }
-                                    );
-
-
-                                    setTimeout(
-                                        finish,
-                                        10000
-                                    );
-
-                                }
-                            );
-
-                        }
-                    )
-
-                );
-
-            }
-
-
-            /* =================================================
-               IMAGE URL -> BASE64
-            ================================================= */
-
-            async function imageUrlToDataURL(
-                url
-            ) {
-
-
-                try {
-
-
-                    const response =
-                        await fetch(
-                            url,
-                            {
-                                mode:
-                                    "cors",
-
-                                cache:
-                                    "force-cache"
-                            }
-                        );
-
-
-                    if (
-                        !response.ok
-                    ) {
-
-                        return null;
-
-                    }
-
-
-                    const blob =
-                        await response.blob();
-
-
-                    return await new Promise(
-                        function (
-                            resolve,
-                            reject
-                        ) {
-
-
-                            const reader =
-                                new FileReader();
-
-
-                            reader.onloadend =
-                                function () {
-
-                                    resolve(
-                                        reader.result
-                                    );
-
-                                };
-
-
-                            reader.onerror =
-                                reject;
-
-
-                            reader.readAsDataURL(
-                                blob
-                            );
-
-                        }
-                    );
-
-                }
-
-                catch (
-                    error
-                ) {
-
-
-                    console.warn(
-                        "Không chuyển được ảnh:",
-                        url
-                    );
-
-
-                    return null;
-
-                }
-
-            }
-
-
-            /* =================================================
-               PREPARE IMAGE
-            ================================================= */
-
-            async function prepareImagesForPdf(
-                root
-            ) {
-
-
-                const images =
-                    Array.from(
-                        root.querySelectorAll(
-                            "img"
-                        )
-                    );
-
-
-                for (
-                    let i = 0;
-                    i < images.length;
-                    i++
-                ) {
-
-
-                    const img =
-                        images[i];
-
-
-                    let src =
-                        img.getAttribute(
-                            "src"
-                        );
-
-
-                    if (!src) {
-                        continue;
-                    }
-
-
-                    if (
-                        src.startsWith(
-                            "data:"
-                        ) ||
-                        src.startsWith(
-                            "blob:"
-                        )
-                    ) {
-
-                        continue;
-
-                    }
-
-
-                    try {
-
-                        src =
-                            new URL(
-                                src,
-                                window.location.href
-                            ).href;
-
-                    }
-
-                    catch (
-                        error
-                    ) {}
-
-
-                    const dataUrl =
-                        await imageUrlToDataURL(
-                            src
-                        );
-
-
-                    if (
-                        dataUrl
-                    ) {
-
-
-                        img.removeAttribute(
-                            "crossorigin"
-                        );
-
-
-                        img.src =
-                            dataUrl;
-
-
-                        try {
-
-                            if (
-                                img.decode
-                            ) {
-
-                                await img.decode();
-
                             }
 
-                        }
 
-                        catch (
-                            error
-                        ) {}
-
-                    }
-
-
-                    await delay(
-                        20
-                    );
-
-                }
-
-            }
-
-
-            /* =================================================
-               CREATE IMAGE
-            ================================================= */
-
-            function createPdfImage(
-                original
-            ) {
-
-
-                const img =
-                    document.createElement(
-                        "img"
-                    );
-
-
-                img.src =
-                    original.currentSrc ||
-                    original.src;
-
-
-                img.alt =
-                    original.alt ||
-                    "";
-
-
-                Object.assign(
-                    img.style,
-                    {
-
-                        display:
-                            "block",
-
-                        width:
-                            "250px",
-
-                        height:
-                            "auto",
-
-                        margin:
-                            "0 auto"
-
-                    }
-                );
-
-
-                return img;
-
-            }
-
-
-            /* =================================================
-               CREATE PREVIEW
-            ================================================= */
-
-            function createPreview() {
-
-
-                let oldWrap =
-                    document.getElementById(
-                        "pdfPreviewWrap-1"
-                    );
-
-
-                /*
-                 * Preview đã tồn tại
-                 * => không tạo thêm
-                 */
-
-                if (
-                    oldWrap
-                ) {
-
-                    return oldWrap;
-
-                }
-
-
-                const questions =
-                    Array.from(
-                        document.querySelectorAll(
-                            ".question-item-1"
-                        )
-                    );
-
-
-                if (
-                    !questions.length
-                ) {
-
-                    alert(
-                        "Không tìm thấy câu hỏi."
-                    );
-
-                    return null;
-
-                }
-
-
-                /* =============================================
-                   WRAP
-                ============================================= */
-
-                const wrap =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                wrap.id =
-                    "pdfPreviewWrap-1";
-
-
-                document.body.appendChild(
-                    wrap
-                );
-
-
-                /*
-                 * Khóa trang phía sau
-                 */
-
-                document.body.style.overflow =
-                    "hidden";
-
-
-                /* =============================================
-                   TOOLBAR
-                ============================================= */
-
-                const toolbar =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                Object.assign(
-                    toolbar.style,
-                    {
-
-                        width:
-                            "794px",
-
-                        maxWidth:
-                            "calc(100vw - 20px)",
-
-                        margin:
-                            "0 auto 15px auto",
-
-                        display:
-                            "flex",
-
-                        justifyContent:
-                            "flex-end",
-
-                        gap:
-                            "10px",
-
-                        position:
-                            "sticky",
-
-                        top:
-                            "10px",
-
-                        zIndex:
-                            "9999"
-
-                    }
-                );
-
-
-                /* =============================================
-                   DOWNLOAD BUTTON
-                ============================================= */
-
-                const downloadBtn =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                downloadBtn.type =
-                    "button";
-
-
-                downloadBtn.textContent =
-                    "Tải PDF";
-
-
-                Object.assign(
-                    downloadBtn.style,
-                    {
-
-                        padding:
-                            "10px 18px",
-
-                        border:
-                            "0",
-
-                        borderRadius:
-                            "8px",
-
-                        background:
-                            "#2563eb",
-
-                        color:
-                            "#fff",
-
-                        fontSize:
-                            "17px",
-
-                        fontWeight:
-                            "700",
-
-                        cursor:
-                            "pointer",
-
-                        boxShadow:
-                            "0 3px 12px rgba(0,0,0,.20)"
-
-                    }
-                );
-
-
-                /* =============================================
-                   HIDE BUTTON
-                ============================================= */
-
-                const hideBtn =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                hideBtn.type =
-                    "button";
-
-
-                hideBtn.textContent =
-                    "Ẩn bản in";
-
-
-                Object.assign(
-                    hideBtn.style,
-                    {
-
-                        padding:
-                            "10px 18px",
-
-                        border:
-                            "0",
-
-                        borderRadius:
-                            "8px",
-
-                        background:
-                            "#475569",
-
-                        color:
-                            "#fff",
-
-                        fontSize:
-                            "17px",
-
-                        fontWeight:
-                            "700",
-
-                        cursor:
-                            "pointer",
-
-                        boxShadow:
-                            "0 3px 12px rgba(0,0,0,.20)"
-
-                    }
-                );
-
-
-                toolbar.appendChild(
-                    downloadBtn
-                );
-
-
-                toolbar.appendChild(
-                    hideBtn
-                );
-
-
-                wrap.appendChild(
-                    toolbar
-                );
-
-
-                /* =============================================
-                   CONTENT
-                ============================================= */
-
-                const pdfContent =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                pdfContent.id =
-                    "pdfContent-1";
-
-
-                wrap.appendChild(
-                    pdfContent
-                );
-
-
-                /* =============================================
-                   HEADER
-                ============================================= */
-
-                const header =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                header.className =
-                    "pdf-header-1";
-
-
-                header.innerHTML = `
-
-                    <div style="
-                        padding-bottom:18px;
-                        margin-bottom:20px;
-                        border-bottom:2px solid #111827;
-                    ">
-
-                        <div style="
-                            font-size:12px;
-                            font-weight:700;
-                            letter-spacing:1px;
-                            color:#64748b;
-                        ">
-                            PHIẾU ÔN LUYỆN
-                        </div>
-
-                        <div style="
-                            margin-top:4px;
-                            font-size:28px;
-                            font-weight:800;
-                        ">
-                            TOÁN LỚP 2
-                        </div>
-
-                        <div style="
-                            margin-top:5px;
-                            font-size:16px;
-                            color:#64748b;
-                        ">
-                            Bài luyện tập tổng hợp
-                        </div>
-
-                    </div>
-
-
-                    <div style="
-                        display:grid;
-                        grid-template-columns:1fr 180px;
-                        gap:30px;
-                        margin:28px 0;
-                        font-size:14px;
-                    ">
-
-                        <div>
-                            Họ và tên:
-
-                            <span style="
-                                display:inline-block;
-                                width:70%;
-                                border-bottom:1px solid #64748b;
-                            ">
-                                &nbsp;
-                            </span>
-                        </div>
-
-                        <div>
-                            Lớp:
-
-                            <span style="
-                                display:inline-block;
-                                width:100px;
-                                border-bottom:1px solid #64748b;
-                            ">
-                                &nbsp;
-                            </span>
-                        </div>
-
-                    </div>
-
-                `;
-
-
-                pdfContent.appendChild(
-                    header
-                );
-
-
-                /* =============================================
-                   QUESTIONS
-                ============================================= */
-
-                questions.forEach(
-                    function (
-                        question,
-                        index
-                    ) {
-
-
-                        const item =
-                            document.createElement(
-                                "div"
+                            clearTimeout(
+                                scrollTimer
                             );
 
 
-                        item.className =
-                            "pdf-question-item-1";
+                            scrollTimer =
+                                setTimeout(
+                                    function () {
 
+                                        isSidebarScrolling =
+                                            false;
 
-                        /* =====================================
-                           TITLE
-                        ===================================== */
+                                        updateActiveByScroll();
 
-                        const title =
-                            document.createElement(
-                                "div"
-                            );
-
-
-                        title.innerHTML =
-                            "<strong>Câu " +
-                            (
-                                index + 1
-                            ) +
-                            ".</strong>";
-
-
-                        title.style.fontSize =
-                            "18px";
-
-
-                        title.style.marginBottom =
-                            "7px";
-
-
-                        item.appendChild(
-                            title
-                        );
-
-
-                        /* =====================================
-                           TEXT
-                        ===================================== */
-
-                        const textSource =
-                            question.querySelector(
-                                ".question-text-1"
-                            );
-
-
-                        if (
-                            textSource
-                        ) {
-
-
-                            const text =
-                                document.createElement(
-                                    "div"
+                                    },
+                                    700
                                 );
 
-
-                            text.innerHTML =
-                                textSource.innerHTML;
-
-
-                            text.style.fontSize =
-                                "18px";
-
-
-                            text.style.lineHeight =
-                                "1.6";
-
-
-                            text.style.marginBottom =
-                                "12px";
-
-
-                            item.appendChild(
-                                text
-                            );
-
                         }
-
-
-                        /* =====================================
-                           IMAGE
-                        ===================================== */
-
-                        const originalImg =
-                            question.querySelector(
-                                ".question-image-1 img"
-                            );
-
-
-                        if (
-                            originalImg
-                        ) {
-
-
-                            const imageWrap =
-                                document.createElement(
-                                    "div"
-                                );
-
-
-                            imageWrap.style.textAlign =
-                                "center";
-
-
-                            imageWrap.style.margin =
-                                "14px 0";
-
-
-                            imageWrap.appendChild(
-                                createPdfImage(
-                                    originalImg
-                                )
-                            );
-
-
-                            item.appendChild(
-                                imageWrap
-                            );
-
-                        }
-
-
-                        /* =====================================
-                           RADIO
-                        ===================================== */
-
-                        const answers =
-                            Array.from(
-                                question.querySelectorAll(
-                                    ".answer-1"
-                                )
-                            );
-
-
-                        if (
-                            answers.length
-                        ) {
-
-
-                            const answerGrid =
-                                document.createElement(
-                                    "div"
-                                );
-
-
-                            Object.assign(
-                                answerGrid.style,
-                                {
-
-                                    display:
-                                        "grid",
-
-                                    gridTemplateColumns:
-                                        "1fr 1fr",
-
-                                    columnGap:
-                                        "30px",
-
-                                    rowGap:
-                                        "10px",
-
-                                    marginTop:
-                                        "12px"
-
-                                }
-                            );
-
-
-                            answers.forEach(
-                                function (
-                                    answer,
-                                    answerIndex
-                                ) {
-
-
-                                    const content =
-                                        answer.querySelector(
-                                            ".answer-content-1"
-                                        );
-
-
-                                    if (
-                                        !content
-                                    ) {
-
-                                        return;
-
-                                    }
-
-
-                                    const row =
-                                        document.createElement(
-                                            "div"
-                                        );
-
-
-                                    row.innerHTML =
-
-                                        "<strong>" +
-
-                                        String.fromCharCode(
-                                            65 +
-                                            answerIndex
-                                        ) +
-
-                                        ".</strong> " +
-
-                                        content.innerHTML;
-
-
-                                    answerGrid.appendChild(
-                                        row
-                                    );
-
-                                }
-                            );
-
-
-                            item.appendChild(
-                                answerGrid
-                            );
-
-                        }
-
-
-                        /* =====================================
-                           TEXT ANSWER
-                        ===================================== */
-
-                        if (
-                            question.querySelector(
-                                ".text-answer-input-1"
-                            )
-                        ) {
-
-
-                            const line =
-                                document.createElement(
-                                    "div"
-                                );
-
-
-                            line.style.marginTop =
-                                "15px";
-
-
-                            line.innerHTML = `
-
-                                    <div style="
-                                        display:flex;
-                                        align-items:flex-end;
-                                        width:100%;
-                                        gap:8px;
-                                    ">
-
-                                        <span style="
-                                            white-space:nowrap;
-                                        ">
-                                            Trả lời:
-                                        </span>
-
-                                        <span style="
-                                            flex:1;
-                                            border-bottom:2px dotted #111827;
-                                            height:20px;
-                                        "></span>
-
-                                    </div>
-
-                                `;
-
-
-                            item.appendChild(
-                                line
-                            );
-
-                        }
-
-
-                        pdfContent.appendChild(
-                            item
-                        );
-
-                    }
-                );
-
-
-                /* =============================================
-                   MOBILE SCALE PREVIEW
-                ============================================= */
-
-                function updateScale() {
-
-
-                    if (
-                        window.innerWidth >
-                        850
-                    ) {
-
-                        pdfContent.style.transform =
-                            "";
-
-
-                        pdfContent.style.transformOrigin =
-                            "";
-
-
-                        pdfContent.style.marginBottom =
-                            "";
-
-
-                        return;
-
-                    }
-
-
-                    const scale =
-                        Math.min(
-
-                            1,
-
-                            (
-                                window.innerWidth -
-                                10
-                            ) /
-
-                            794
-
-                        );
-
-
-                    pdfContent.style.transform =
-                        "scale(" +
-                        scale +
-                        ")";
-
-
-                    pdfContent.style.transformOrigin =
-                        "top left";
-
-
-                    pdfContent.style.marginBottom =
-
-                        "-" +
-
-                        (
-                            pdfContent.offsetHeight *
-
-                            (
-                                1 -
-                                scale
-                            )
-                        ) +
-
-                        "px";
-
-                }
-
-
-                updateScale();
-
-
-                window.addEventListener(
-                    "resize",
-                    updateScale
-                );
-
-
-                /* =============================================
-                   HIDE PREVIEW
-                ============================================= */
-
-                hideBtn.addEventListener(
-                    "click",
-                    function () {
-
-
-                        /*
-                         * Gỡ resize listener
-                         */
-
-                        window.removeEventListener(
-                            "resize",
-                            updateScale
-                        );
-
-
-                        /*
-                         * Xóa preview
-                         */
-
-                        wrap.remove();
-
-
-                        /*
-                         * Mở scroll lại cho trang
-                         */
-
-                        document.body.style.overflow =
-                            "";
-
-                    }
-                );
-
-
-                /* =============================================
-                   DOWNLOAD PDF
-                ============================================= */
-
-                downloadBtn.addEventListener(
-                    "click",
-                    async function () {
-
-
-                        downloadBtn.disabled =
-                            true;
-
-
-                        downloadBtn.textContent =
-                            "Đang tạo PDF...";
-
-
-                        try {
-
-
-                            await exportPdf(
-                                pdfContent
-                            );
-
-                        }
-
-                        catch (
-                            error
-                        ) {
-
-
-                            console.error(
-                                "PDF ERROR:",
-                                error
-                            );
-
-
-                            alert(
-                                "Không tạo được PDF: " +
-                                (
-                                    error.message ||
-                                    error
-                                )
-                            );
-
-                        }
-
-                        finally {
-
-
-                            downloadBtn.disabled =
-                                false;
-
-
-                            downloadBtn.textContent =
-                                "Tải PDF";
-
-                        }
-
-                    }
-                );
-
-
-                return wrap;
-
-            }
-
-
-            /* =================================================
-               ELEMENT -> CANVAS
-            ================================================= */
-
-            async function toCanvas(
-                element
-            ) {
-
-
-                return await html2canvas(
-                    element,
-                    {
-
-                        scale:
-                            window.innerWidth <= 768
-                                ? 1.15
-                                : 1.5,
-
-                        useCORS:
-                            true,
-
-                        allowTaint:
-                            false,
-
-                        backgroundColor:
-                            "#fff",
-
-                        logging:
-                            false,
-
-                        imageTimeout:
-                            15000,
-
-                        windowWidth:
-                            794
-
-                    }
-                );
-
-            }
-
-
-            /* =================================================
-               EXPORT
-            ================================================= */
-
-            async function exportPdf(
-                pdfContent
-            ) {
-
-
-                checkLibraries();
-
-
-                const jsPDF =
-                    window.jspdf.jsPDF;
-
-
-                const oldTransform =
-                    pdfContent.style.transform;
-
-
-                const oldTransformOrigin =
-                    pdfContent.style.transformOrigin;
-
-
-                const oldMargin =
-                    pdfContent.style.marginBottom;
-
-
-                /*
-                 * Khi chụp PDF:
-                 * bỏ scale mobile
-                 */
-
-                pdfContent.style.transform =
-                    "none";
-
-
-                pdfContent.style.transformOrigin =
-                    "top left";
-
-
-                pdfContent.style.marginBottom =
-                    "0";
-
-
-                try {
-
-
-                    await prepareImagesForPdf(
-                        pdfContent
                     );
 
 
-                    await waitImagesReady(
-                        pdfContent
+                    grid.appendChild(
+                        button
                     );
-
-
-                    await delay(
-                        100
-                    );
-
-
-                    const pdf =
-                        new jsPDF({
-
-                            orientation:
-                                "portrait",
-
-                            unit:
-                                "mm",
-
-                            format:
-                                "a4",
-
-                            compress:
-                                true
-
-                        });
-
-
-                    const PAGE_W =
-                        210;
-
-
-                    const PAGE_H =
-                        297;
-
-
-                    const LEFT =
-                        12;
-
-
-                    const RIGHT =
-                        12;
-
-
-                    const TOP =
-                        12;
-
-
-                    const BOTTOM =
-                        18;
-
-
-                    const CONTENT_W =
-                        PAGE_W -
-                        LEFT -
-                        RIGHT;
-
-
-                    const MAX_Y =
-                        PAGE_H -
-                        BOTTOM;
-
-
-                    let y =
-                        TOP;
-
-
-                    const blocks =
-                        [];
-
-
-                    const header =
-                        pdfContent.querySelector(
-                            ".pdf-header-1"
-                        );
-
-
-                    if (
-                        header
-                    ) {
-
-                        blocks.push(
-                            header
-                        );
-
-                    }
-
-
-                    pdfContent
-                        .querySelectorAll(
-                            ".pdf-question-item-1"
-                        )
-                        .forEach(
-                            function (
-                                item
-                            ) {
-
-                                blocks.push(
-                                    item
-                                );
-
-                            }
-                        );
-
-
-                    /* =========================================
-                       RENDER TỪNG BLOCK
-                    ========================================= */
-
-                    for (
-                        let i = 0;
-                        i < blocks.length;
-                        i++
-                    ) {
-
-
-                        const block =
-                            blocks[i];
-
-
-                        await prepareImagesForPdf(
-                            block
-                        );
-
-
-                        await waitImagesReady(
-                            block
-                        );
-
-
-                        const canvas =
-                            await toCanvas(
-                                block
-                            );
-
-
-                        if (
-                            !canvas ||
-                            !canvas.width ||
-                            !canvas.height
-                        ) {
-
-                            continue;
-
-                        }
-
-
-                        const image =
-                            canvas.toDataURL(
-                                "image/jpeg",
-                                .92
-                            );
-
-
-                        let width =
-                            CONTENT_W;
-
-
-                        let height =
-                            canvas.height *
-                            width /
-                            canvas.width;
-
-
-                        /*
-                         * Không đủ chỗ
-                         * => sang trang mới
-                         */
-
-                        if (
-                            y +
-                            height >
-                            MAX_Y &&
-                            y >
-                            TOP
-                        ) {
-
-
-                            pdf.addPage();
-
-
-                            y =
-                                TOP;
-
-                        }
-
-
-                        /*
-                         * Block cao hơn cả 1 trang
-                         */
-
-                        const maxHeight =
-                            PAGE_H -
-                            TOP -
-                            BOTTOM;
-
-
-                        if (
-                            height >
-                            maxHeight
-                        ) {
-
-
-                            const ratio =
-                                maxHeight /
-                                height;
-
-
-                            width *=
-                                ratio;
-
-
-                            height *=
-                                ratio;
-
-                        }
-
-
-                        pdf.addImage(
-
-                            image,
-
-                            "JPEG",
-
-                            LEFT,
-
-                            y,
-
-                            width,
-
-                            height,
-
-                            undefined,
-
-                            "FAST"
-
-                        );
-
-
-                        y +=
-                            height +
-                            4;
-
-
-                        /*
-                         * Giải phóng canvas
-                         */
-
-                        canvas.width =
-                            1;
-
-
-                        canvas.height =
-                            1;
-
-
-                        await delay(
-                            30
-                        );
-
-                    }
-
-
-                    /* =========================================
-                       FOOTER
-                    ========================================= */
-
-                    const pages =
-                        pdf.getNumberOfPages();
-
-
-                    for (
-                        let page = 1;
-                        page <= pages;
-                        page++
-                    ) {
-
-
-                        pdf.setPage(
-                            page
-                        );
-
-
-                        pdf.setFontSize(
-                            9
-                        );
-
-
-                        pdf.setTextColor(
-                            100,
-                            116,
-                            139
-                        );
-
-
-                        pdf.text(
-
-                            "2026 - https://hminhquan2026.blogspot.com/",
-
-                            PAGE_W / 2,
-
-                            289,
-
-                            {
-                                align:
-                                    "center"
-                            }
-
-                        );
-
-
-                        pdf.text(
-
-                            page +
-                            " / " +
-                            pages,
-
-                            PAGE_W -
-                            RIGHT,
-
-                            289,
-
-                            {
-                                align:
-                                    "right"
-                            }
-
-                        );
-
-                    }
-
-
-                    /* =========================================
-                       FILE NAME
-                    ========================================= */
-
-                    let fileName =
-                        "toan-lop-2.pdf";
-
-
-                    const subtitle =
-                        document.querySelector(
-                            ".subtitle"
-                        );
-
-
-                    if (
-                        subtitle &&
-                        subtitle.textContent.trim()
-                    ) {
-
-
-                        const clean =
-                            subtitle.textContent
-                            .trim()
-                            .normalize(
-                                "NFD"
-                            )
-                            .replace(
-                                /[\u0300-\u036f]/g,
-                                ""
-                            )
-                            .replace(
-                                /đ/g,
-                                "d"
-                            )
-                            .replace(
-                                /Đ/g,
-                                "D"
-                            )
-                            .replace(
-                                /[^a-zA-Z0-9]+/g,
-                                "-"
-                            )
-                            .replace(
-                                /^-+|-+$/g,
-                                ""
-                            )
-                            .toLowerCase();
-
-
-                        if (
-                            clean
-                        ) {
-
-                            fileName =
-                                clean +
-                                ".pdf";
-
-                        }
-
-                    }
-
-
-                    pdf.save(
-                        fileName
-                    );
-
-                }
-
-                finally {
-
-
-                    /*
-                     * Trả lại trạng thái preview
-                     */
-
-                    pdfContent.style.transform =
-                        oldTransform;
-
-
-                    pdfContent.style.transformOrigin =
-                        oldTransformOrigin;
-
-
-                    pdfContent.style.marginBottom =
-                        oldMargin;
-
-                }
-
-            }
-
-
-            /* =================================================
-               BUTTON
-            ================================================= */
-
-            showBtn.addEventListener(
-                "click",
-                function () {
-
-                    createPreview();
 
                 }
             );
 
 
+            /* =================================================
+               ACTIVE QUESTION
+            ================================================= */
+
+            function setActiveQuestion(
+                number
+            ) {
+
+
+                const buttons =
+                    grid.querySelectorAll(
+                        ".question-btn-1"
+                    );
+
+
+                buttons.forEach(
+                    function (btn) {
+
+                        btn.classList.remove(
+                            "current-1"
+                        );
+
+                    }
+                );
+
+
+                const active =
+                    grid.querySelector(
+
+                        '[data-question="' +
+                        number +
+                        '"]'
+
+                    );
+
+
+                if (active) {
+
+                    active.classList.add(
+                        "current-1"
+                    );
+
+                }
+
+            }
+
+
+            /* =================================================
+               NORMALIZE
+            ================================================= */
+
+            function normalizeAnswer(
+                value
+            ) {
+
+                return String(value)
+                    .trim()
+                    .toLowerCase()
+                    .replace(
+                        /\s+/g,
+                        " "
+                    );
+
+            }
+
+
+            /* =================================================
+               STATS
+            ================================================= */
+
+            function updateStats() {
+
+
+                let answered =
+                    0;
+
+
+                questions.forEach(
+                    function (question) {
+
+                        if (
+                            question.dataset.status ===
+                                "correct" ||
+
+                            question.dataset.status ===
+                                "wrong"
+                        ) {
+
+                            answered++;
+
+                        }
+
+                    }
+                );
+
+
+                answeredCount.textContent =
+                    answered;
+
+
+                unansweredCount.textContent =
+                    questions.length -
+                    answered;
+
+            }
+
+
+            /* =================================================
+               GRID STATUS
+            ================================================= */
+
+            function updateGrid(
+                questionIndex,
+                status
+            ) {
+
+
+                const button =
+                    grid.querySelector(
+
+                        '[data-question="' +
+                        questionIndex +
+                        '"]'
+
+                    );
+
+
+                if (!button) {
+                    return;
+                }
+
+
+                button.classList.remove(
+                    "correct-1",
+                    "wrong-1"
+                );
+
+
+                if (
+                    status ===
+                    "correct"
+                ) {
+
+                    button.classList.add(
+                        "correct-1"
+                    );
+
+                }
+
+
+                if (
+                    status ===
+                    "wrong"
+                ) {
+
+                    button.classList.add(
+                        "wrong-1"
+                    );
+
+                }
+
+            }
+
+
+            /* =================================================
+               LOCK QUESTION
+            ================================================= */
+
+            function lockQuestion(
+                question
+            ) {
+
+
+                question.dataset.locked =
+                    "true";
+
+
+                const textInput =
+                    question.querySelector(
+                        ".text-answer-input-1"
+                    );
+
+
+                if (textInput) {
+
+                    textInput.disabled =
+                        true;
+
+                }
+
+
+                const answerButton =
+                    question.querySelector(
+                        ".check-answer-btn-1"
+                    );
+
+
+                if (answerButton) {
+
+                    answerButton.disabled =
+                        true;
+
+                    answerButton.textContent =
+                        "Đã trả lời";
+
+                }
+
+
+                const radios =
+                    question.querySelectorAll(
+                        'input[type="radio"]'
+                    );
+
+
+                radios.forEach(
+                    function (radio) {
+
+                        radio.disabled =
+                            true;
+
+                    }
+                );
+
+
+                question.classList.add(
+                    "answered-1"
+                );
+
+            }
+
+
+            /* =================================================
+               QUESTIONS
+            ================================================= */
+
+            questions.forEach(
+                function (
+                    question,
+                    index
+                ) {
+
+
+                    const type =
+                        question.dataset.type;
+
+
+                    const correctAnswer =
+                        normalizeAnswer(
+                            question.dataset.answer
+                        );
+
+
+                    const solution =
+                        question.querySelector(
+                            ".solution-1"
+                        );
+
+
+                    /* =============================================
+                       TEXT
+                    ============================================= */
+
+                    if (
+                        type ===
+                        "text"
+                    ) {
+
+
+                        const input =
+                            question.querySelector(
+                                ".text-answer-input-1"
+                            );
+
+
+                        const button =
+                            question.querySelector(
+                                ".check-answer-btn-1"
+                            );
+
+
+                        if (
+                            !input ||
+                            !button
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        function checkTextAnswer() {
+
+
+                            if (
+                                question.dataset.locked ===
+                                    "true" ||
+
+                                question.dataset.status
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            const value =
+                                normalizeAnswer(
+                                    input.value
+                                );
+
+
+                            if (!value) {
+
+                                input.focus();
+
+                                return;
+
+                            }
+
+
+                            input.classList.remove(
+                                "correct-1",
+                                "wrong-1"
+                            );
+
+
+                            if (
+                                value ===
+                                    correctAnswer ||
+
+                                value.startsWith(
+                                    correctAnswer +
+                                    " "
+                                )
+                            ) {
+
+
+                                input.classList.add(
+                                    "correct-1"
+                                );
+
+
+                                question.dataset.status =
+                                    "correct";
+
+
+                                updateGrid(
+                                    index + 1,
+                                    "correct"
+                                );
+
+                            }
+
+                            else {
+
+
+                                input.classList.add(
+                                    "wrong-1"
+                                );
+
+
+                                question.dataset.status =
+                                    "wrong";
+
+
+                                updateGrid(
+                                    index + 1,
+                                    "wrong"
+                                );
+
+                            }
+
+
+                            if (solution) {
+
+                                solution.classList.add(
+                                    "show-1"
+                                );
+
+                            }
+
+
+                            lockQuestion(
+                                question
+                            );
+
+
+                            updateStats();
+
+                        }
+
+
+                        button.addEventListener(
+                            "click",
+                            checkTextAnswer
+                        );
+
+
+                        input.addEventListener(
+                            "keydown",
+                            function (event) {
+
+                                if (
+                                    event.key ===
+                                    "Enter"
+                                ) {
+
+                                    checkTextAnswer();
+
+                                }
+
+                            }
+                        );
+
+                    }
+
+
+                    /* =============================================
+                       RADIO
+                    ============================================= */
+
+                    if (
+                        type ===
+                        "radio"
+                    ) {
+
+
+                        const answers =
+                            question
+                            .querySelectorAll(
+                                ".answer-1"
+                            );
+
+
+                        answers.forEach(
+                            function (answer) {
+
+
+                                answer.addEventListener(
+                                    "click",
+                                    function () {
+
+
+                                        if (
+                                            question.dataset.locked ===
+                                                "true" ||
+
+                                            question.dataset.status
+                                        ) {
+
+                                            return;
+
+                                        }
+
+
+                                        answers.forEach(
+                                            function (
+                                                item
+                                            ) {
+
+                                                item.classList.remove(
+                                                    "selected-1",
+                                                    "correct-1",
+                                                    "wrong-1"
+                                                );
+
+                                            }
+                                        );
+
+
+                                        const input =
+                                            answer.querySelector(
+                                                "input"
+                                            );
+
+
+                                        if (!input) {
+                                            return;
+                                        }
+
+
+                                        input.checked =
+                                            true;
+
+
+                                        answer.classList.add(
+                                            "selected-1"
+                                        );
+
+
+                                        const selectedValue =
+                                            normalizeAnswer(
+                                                input.value
+                                            );
+
+
+                                        if (
+                                            selectedValue ===
+                                            correctAnswer
+                                        ) {
+
+
+                                            answer.classList.add(
+                                                "correct-1"
+                                            );
+
+
+                                            question.dataset.status =
+                                                "correct";
+
+
+                                            updateGrid(
+                                                index + 1,
+                                                "correct"
+                                            );
+
+                                        }
+
+                                        else {
+
+
+                                            answer.classList.add(
+                                                "wrong-1"
+                                            );
+
+
+                                            question.dataset.status =
+                                                "wrong";
+
+
+                                            updateGrid(
+                                                index + 1,
+                                                "wrong"
+                                            );
+
+
+                                            /*
+                                             * Hiện đáp án đúng
+                                             */
+
+                                            answers.forEach(
+                                                function (
+                                                    item
+                                                ) {
+
+
+                                                    const radio =
+                                                        item.querySelector(
+                                                            "input"
+                                                        );
+
+
+                                                    if (!radio) {
+                                                        return;
+                                                    }
+
+
+                                                    if (
+                                                        normalizeAnswer(
+                                                            radio.value
+                                                        ) ===
+                                                        correctAnswer
+                                                    ) {
+
+                                                        item.classList.add(
+                                                            "correct-1"
+                                                        );
+
+                                                    }
+
+                                                }
+                                            );
+
+                                        }
+
+
+                                        if (
+                                            solution
+                                        ) {
+
+                                            solution.classList.add(
+                                                "show-1"
+                                            );
+
+                                        }
+
+
+                                        lockQuestion(
+                                            question
+                                        );
+
+
+                                        updateStats();
+
+                                    }
+                                );
+
+                            }
+                        );
+
+                    }
+
+                }
+            );
+
+
+            /* =================================================
+               MOBILE SIDEBAR
+            ================================================= */
+
+            if (openMenu) {
+
+                openMenu.addEventListener(
+                    "click",
+                    function () {
+
+                        if (sidebar) {
+
+                            sidebar.classList.add(
+                                "open-1"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            if (closeMenu) {
+
+                closeMenu.addEventListener(
+                    "click",
+                    function () {
+
+                        if (sidebar) {
+
+                            sidebar.classList.remove(
+                                "open-1"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               ACTIVE SCROLL
+            ================================================= */
+
+            function updateActiveByScroll() {
+
+
+                if (
+                    isSidebarScrolling
+                ) {
+
+                    return;
+
+                }
+
+
+                let closestQuestion =
+                    null;
+
+
+                let closestDistance =
+                    Infinity;
+
+
+                const targetY =
+                    window.innerHeight *
+                    .28;
+
+
+                questions.forEach(
+                    function (question) {
+
+
+                        const rect =
+                            question
+                            .getBoundingClientRect();
+
+
+                        const distance =
+                            Math.abs(
+                                rect.top -
+                                targetY
+                            );
+
+
+                        if (
+                            rect.bottom > 0 &&
+
+                            rect.top <
+                                window.innerHeight &&
+
+                            distance <
+                                closestDistance
+                        ) {
+
+
+                            closestDistance =
+                                distance;
+
+
+                            closestQuestion =
+                                question;
+
+                        }
+
+                    }
+                );
+
+
+                if (
+                    closestQuestion
+                ) {
+
+                    setActiveQuestion(
+                        closestQuestion
+                            .dataset
+                            .questionIndex
+                    );
+
+                }
+
+            }
+
+
+            let scrollRAF =
+                null;
+
+
+            window.addEventListener(
+                "scroll",
+                function () {
+
+
+                    if (
+                        scrollRAF
+                    ) {
+
+                        cancelAnimationFrame(
+                            scrollRAF
+                        );
+
+                    }
+
+
+                    scrollRAF =
+                        requestAnimationFrame(
+                            updateActiveByScroll
+                        );
+
+                },
+                {
+                    passive:
+                        true
+                }
+            );
+
+
+            window.addEventListener(
+                "resize",
+                updateActiveByScroll
+            );
+
+
+            /* =================================================
+               INIT
+            ================================================= */
+
+            updateStats();
+
+            updateActiveByScroll();
+
         }
     );
 
 })();
+
   
   
   
@@ -3159,27 +3711,91 @@ const MEDIA_URL = "https://archive.org/download/";
    RENDER CÂU HỎI
    Chỉ render HTML - không chấm điểm
 ================================ */
+/* ================================
+   RENDER QUIZ HTML
+
+   Chức năng:
+   - Render câu hỏi
+   - Render đáp án
+   - Render ảnh
+   - Shuffle đáp án
+   - Render sidebar số câu
+   - Mở / đóng sidebar mobile
+   - Click số câu để di chuyển
+================================ */
+/* =========================================================
+   RENDER QUIZ HTML
+   - Render câu hỏi
+   - Render đáp án
+   - Render ảnh
+   - Shuffle đáp án
+   - Render số câu sidebar
+   - Mở / đóng sidebar mobile
+   - Click số câu để cuộn tới câu hỏi
+========================================================= */
+/* =========================================================
+   RENDER QUIZ HTML
+
+   CHỈ LÀM:
+   - Render câu hỏi
+   - Render đáp án
+   - Render ảnh
+   - Shuffle đáp án
+
+   KHÔNG LÀM:
+   - Không render sidebar
+   - Không tạo question-btn-1
+   - Không chấm điểm
+   - Không update stats
+   - Không mở/đóng sidebar
+   - Không active scroll
+
+   Các chức năng đó để QuizGrader xử lý.
+========================================================= */
 
 (function (window) {
+
     "use strict";
+
+
+    /* =========================================================
+       DATA
+    ========================================================= */
 
     let questions = [];
 
+
+    /* =========================================================
+       SETTINGS
+    ========================================================= */
+
     let settings = {
+
         folder: "",
+
         shuffleAnswers: false
     };
 
 
-    /* ================================
-       XỬ LÝ ĐƯỜNG DẪN ẢNH
-    ================================ */
+    /* =========================================================
+       GET IMAGE URL
+    ========================================================= */
 
     function getImageUrl(src) {
 
-        if (!src) return "";
+        if (!src) {
 
-        src = String(src).trim();
+            return "";
+        }
+
+
+        src =
+            String(src).trim();
+
+
+        /* =====================================================
+           URL ĐẦY ĐỦ
+        ===================================================== */
 
         if (
             src.indexOf("http://") === 0 ||
@@ -3188,90 +3804,183 @@ const MEDIA_URL = "https://archive.org/download/";
             src.indexOf("data:") === 0 ||
             src.indexOf("blob:") === 0
         ) {
+
             return src;
         }
 
-        if (settings.folder) {
+
+        /* =====================================================
+           KIỂM TRA MEDIA_URL
+        ===================================================== */
+
+        if (
+            typeof MEDIA_URL ===
+            "undefined"
+        ) {
+
+            return src;
+        }
+
+
+        const baseUrl =
+            String(MEDIA_URL)
+                .replace(
+                    /\/+$/,
+                    ""
+                );
+
+
+        /* =====================================================
+           CÓ FOLDER
+        ===================================================== */
+
+        if (
+            settings.folder
+        ) {
 
             return (
-                MEDIA_URL.replace(/\/+$/, "") +
-                "/" +
-                String(settings.folder)
+
+                baseUrl
+
+                +
+
+                "/"
+
+                +
+
+                String(
+                    settings.folder
+                )
                     .trim()
-                    .replace(/^\/+|\/+$/g, "") +
-                "/" +
-                src.replace(/^\/+/, "")
+                    .replace(
+                        /^\/+|\/+$/g,
+                        ""
+                    )
+
+                +
+
+                "/"
+
+                +
+
+                src.replace(
+                    /^\/+/,
+                    ""
+                )
             );
         }
 
+
+        /* =====================================================
+           KHÔNG CÓ FOLDER
+        ===================================================== */
+
         return (
-            MEDIA_URL.replace(/\/+$/, "") +
-            "/" +
-            src.replace(/^\/+/, "")
+
+            baseUrl
+
+            +
+
+            "/"
+
+            +
+
+            src.replace(
+                /^\/+/,
+                ""
+            )
         );
     }
 
 
-    /* ================================
-       SỬA SRC ẢNH TRONG HTML
-    ================================ */
+    /* =========================================================
+       FIX IMAGES TRONG HTML
+    ========================================================= */
 
     function fixImages(element) {
 
-        if (!element) return;
+        if (!element) {
+
+            return;
+        }
+
 
         element
-            .querySelectorAll("img")
-            .forEach(function (img) {
+            .querySelectorAll(
+                "img"
+            )
+            .forEach(
 
-                const src =
-                    img.getAttribute("src");
+                function (img) {
 
-                if (src) {
+                    const src =
+                        img.getAttribute(
+                            "src"
+                        );
+
+
+                    if (!src) {
+
+                        return;
+                    }
+
+
                     img.src =
-                        getImageUrl(src);
+                        getImageUrl(
+                            src
+                        );
                 }
-
-            });
+            );
     }
 
 
-    /* ================================
-       TRỘN MẢNG
-    ================================ */
+    /* =========================================================
+       SHUFFLE ARRAY
+    ========================================================= */
 
     function shuffleArray(array) {
 
-        const result = array.slice();
+        const result =
+            array.slice();
+
 
         for (
-            let i = result.length - 1;
+            let i =
+                result.length - 1;
+
             i > 0;
+
             i--
         ) {
 
             const j =
                 Math.floor(
+
                     Math.random() *
+
                     (i + 1)
                 );
+
 
             [
                 result[i],
                 result[j]
+
             ] = [
+
                 result[j],
                 result[i]
             ];
         }
 
+
         return result;
     }
 
 
-    /* ================================
+    /* =========================================================
        FORMAT SOLUTION
-    ================================ */
+    ========================================================= */
 
     function formatSolution(value) {
 
@@ -3279,19 +3988,33 @@ const MEDIA_URL = "https://archive.org/download/";
             value === undefined ||
             value === null
         ) {
+
             return "";
         }
 
+
         return String(value)
-            .replace(/\r\n/g, "\n")
-            .replace(/\r/g, "\n")
-            .replace(/\n/g, "<br>");
+
+            .replace(
+                /\r\n/g,
+                "\n"
+            )
+
+            .replace(
+                /\r/g,
+                "\n"
+            )
+
+            .replace(
+                /\n/g,
+                "<br>"
+            );
     }
 
 
-    /* ================================
-       TẠO 1 CÂU HỎI
-    ================================ */
+    /* =========================================================
+       CREATE QUESTION
+    ========================================================= */
 
     function createQuestion(
         question,
@@ -3301,38 +4024,80 @@ const MEDIA_URL = "https://archive.org/download/";
         const questionId =
             index + 1;
 
+
+        /* =====================================================
+           TYPE
+
+           QuizGrader hiện tại đọc:
+           question.dataset.type
+
+           và chỉ hiểu:
+           "text"
+           "radio"
+        ===================================================== */
+
         const htmlType =
-            question.type === "text"
+
+            question.type ===
+                "text"
+
                 ? "text"
+
                 : "radio";
 
 
-        /* ================================
-           SECTION
-        ================================ */
+        /* =====================================================
+           QUESTION SECTION
+        ===================================================== */
 
         const section =
             document.createElement(
                 "section"
             );
 
+
         section.className =
             "question-item-1";
 
+
         section.id =
+
             "question-" +
+
             questionId +
+
             "-1";
+
+
+        /*
+         * QuizGrader cần:
+         *
+         * data-question-index
+         */
 
         section.setAttribute(
             "data-question-index",
             questionId
         );
 
+
+        /*
+         * QuizGrader cần:
+         *
+         * data-type
+         */
+
         section.setAttribute(
             "data-type",
             htmlType
         );
+
+
+        /*
+         * QuizGrader cần:
+         *
+         * data-answer
+         */
 
         section.setAttribute(
             "data-answer",
@@ -3340,63 +4105,76 @@ const MEDIA_URL = "https://archive.org/download/";
         );
 
 
-        /* ================================
-           TIÊU ĐỀ CÂU
-        ================================ */
+        /* =====================================================
+           QUESTION NUMBER
+        ===================================================== */
 
         const questionNumber =
             document.createElement(
                 "h2"
             );
 
+
         questionNumber.className =
             "question-number-1";
 
+
         questionNumber.textContent =
-            "Câu " + questionId;
+
+            "Câu " +
+
+            questionId;
+
 
         section.appendChild(
             questionNumber
         );
 
 
-        /* ================================
-           NỘI DUNG CÂU HỎI
-        ================================ */
+        /* =====================================================
+           QUESTION TEXT
+        ===================================================== */
 
         const questionText =
             document.createElement(
                 "div"
             );
 
+
         questionText.className =
             "question-text-1";
+
 
         questionText.innerHTML =
             question.cauhoi || "";
 
+
         fixImages(
             questionText
         );
+
 
         section.appendChild(
             questionText
         );
 
 
-        /* ================================
-           ẢNH CÂU HỎI
-        ================================ */
+        /* =====================================================
+           QUESTION IMAGE
+        ===================================================== */
 
         if (
             question.img &&
-            String(question.img).trim()
+            String(
+                question.img
+            ).trim()
         ) {
 
             const imageWrap =
                 document.createElement(
                     "div"
                 );
+
 
             imageWrap.className =
                 "question-image-1";
@@ -3407,13 +4185,17 @@ const MEDIA_URL = "https://archive.org/download/";
                     "img"
                 );
 
+
             image.src =
                 getImageUrl(
                     question.img
                 );
 
+
             image.alt =
+
                 "Hình câu " +
+
                 questionId;
 
 
@@ -3421,18 +4203,20 @@ const MEDIA_URL = "https://archive.org/download/";
                 image
             );
 
+
             section.appendChild(
                 imageWrap
             );
         }
 
 
-        /* ================================
-           CÂU TEXT
-        ================================ */
+        /* =====================================================
+           TEXT QUESTION
+        ===================================================== */
 
         if (
-            question.type === "text"
+            htmlType ===
+            "text"
         ) {
 
             const answerBox =
@@ -3440,50 +4224,76 @@ const MEDIA_URL = "https://archive.org/download/";
                     "div"
                 );
 
+
             answerBox.className =
                 "text-answer-box-1";
 
+
+            /* =================================================
+               INPUT
+
+               QuizGrader tìm:
+               .text-answer-input-1
+            ================================================= */
 
             const input =
                 document.createElement(
                     "input"
                 );
 
+
             input.type =
                 "text";
+
 
             input.className =
                 "text-answer-input-1";
 
+
             input.placeholder =
                 "Nhập đáp án...";
+
 
             input.autocomplete =
                 "off";
 
+
+            /* =================================================
+               BUTTON
+
+               QuizGrader tìm:
+               .check-answer-btn-1
+            ================================================= */
 
             const button =
                 document.createElement(
                     "button"
                 );
 
+
             button.type =
                 "button";
 
+
             button.className =
                 "check-answer-btn-1";
+
 
             button.textContent =
                 "Trả lời";
 
 
+            /* APPEND */
+
             answerBox.appendChild(
                 input
             );
 
+
             answerBox.appendChild(
                 button
             );
+
 
             section.appendChild(
                 answerBox
@@ -3491,9 +4301,9 @@ const MEDIA_URL = "https://archive.org/download/";
         }
 
 
-        /* ================================
-           CÂU TRẮC NGHIỆM
-        ================================ */
+        /* =====================================================
+           MULTI / RADIO QUESTION
+        ===================================================== */
 
         else {
 
@@ -3502,38 +4312,69 @@ const MEDIA_URL = "https://archive.org/download/";
                     "div"
                 );
 
+
             answersWrap.className =
                 "answers-1";
 
 
+            /* =================================================
+               ANSWERS
+            ================================================= */
+
             let answers = [
+
                 question.answer,
+
                 ...(
+
                     Array.isArray(
                         question.wrong_answers
                     )
+
                         ? question.wrong_answers
+
                         : []
                 )
             ];
 
 
+            /* =================================================
+               REMOVE NULL / DUPLICATE
+            ================================================= */
+
             answers = [
+
                 ...new Set(
+
                     answers
+
                         .filter(
+
                             function (answer) {
 
                                 return (
-                                    answer !== undefined &&
-                                    answer !== null
+
+                                    answer !==
+                                        undefined
+
+                                    &&
+
+                                    answer !==
+                                        null
                                 );
                             }
                         )
-                        .map(String)
+
+                        .map(
+                            String
+                        )
                 )
             ];
 
+
+            /* =================================================
+               SHUFFLE ANSWERS
+            ================================================= */
 
             if (
                 settings.shuffleAnswers
@@ -3546,80 +4387,127 @@ const MEDIA_URL = "https://archive.org/download/";
             }
 
 
+            /* =================================================
+               RENDER ANSWERS
+            ================================================= */
+
             answers.forEach(
+
                 function (
                     answer,
                     answerIndex
                 ) {
+
+                    /*
+                     * QuizGrader tìm:
+                     *
+                     * .answer-1
+                     */
 
                     const label =
                         document.createElement(
                             "label"
                         );
 
+
                     label.className =
                         "answer-1";
 
+
+                    /* =========================================
+                       RADIO
+
+                       QuizGrader lấy:
+                       input.value
+                    ========================================= */
 
                     const input =
                         document.createElement(
                             "input"
                         );
 
+
                     input.type =
                         "radio";
 
+
                     input.name =
+
                         "question-" +
+
                         questionId +
+
                         "-1";
+
 
                     input.value =
                         answer;
 
+
+                    /* =========================================
+                       A B C D
+                    ========================================= */
 
                     const answerLabel =
                         document.createElement(
                             "span"
                         );
 
+
                     answerLabel.className =
                         "answer-label-1";
 
+
                     answerLabel.textContent =
                         String.fromCharCode(
+
                             65 +
+
                             answerIndex
                         );
 
+
+                    /* =========================================
+                       ANSWER CONTENT
+                    ========================================= */
 
                     const answerContent =
                         document.createElement(
                             "span"
                         );
 
+
                     answerContent.className =
                         "answer-content-1";
 
+
                     answerContent.innerHTML =
                         answer;
+
 
                     fixImages(
                         answerContent
                     );
 
 
+                    /* =========================================
+                       APPEND
+                    ========================================= */
+
                     label.appendChild(
                         input
                     );
+
 
                     label.appendChild(
                         answerLabel
                     );
 
+
                     label.appendChild(
                         answerContent
                     );
+
 
                     answersWrap.appendChild(
                         label
@@ -3634,143 +4522,55 @@ const MEDIA_URL = "https://archive.org/download/";
         }
 
 
-        /* ================================
-           GIẢI THÍCH
-        ================================ */
+        /* =====================================================
+           SOLUTION
+
+           QuizGrader tìm:
+           .solution-1
+        ===================================================== */
 
         const solution =
             document.createElement(
                 "div"
             );
 
+
         solution.className =
             "solution-1";
 
+
         solution.innerHTML =
-            "<strong>Giải thích:</strong><br>" +
+
+            "<strong>Giải thích:</strong><br>"
+
+            +
+
             formatSolution(
                 question.solution
             );
 
+
         fixImages(
             solution
         );
+
 
         section.appendChild(
             solution
         );
 
 
+        /* =====================================================
+           RETURN
+        ===================================================== */
+
         return section;
     }
 
 
-    /* ================================
-       RENDER SIDEBAR
-    ================================ */
-
-    function renderSidebarQuestionNumbers() {
-
-        const grid =
-            document.getElementById(
-                "questionGrid-1"
-            );
-
-        if (!grid) return;
-
-
-        const questionElements =
-            document.querySelectorAll(
-                ".question-item-1"
-            );
-
-
-        grid.innerHTML = "";
-
-
-        questionElements.forEach(
-            function (
-                questionElement,
-                index
-            ) {
-
-                const questionNumber =
-                    index + 1;
-
-
-                const button =
-                    document.createElement(
-                        "button"
-                    );
-
-                button.type =
-                    "button";
-
-                button.className =
-                    "question-btn-1";
-
-                button.textContent =
-                    questionNumber;
-
-
-                button.setAttribute(
-                    "data-question-index",
-                    questionNumber
-                );
-
-
-                button.addEventListener(
-                    "click",
-                    function () {
-
-                        questionElement
-                            .scrollIntoView({
-                                behavior: "smooth",
-                                block: "start"
-                            });
-
-                    }
-                );
-
-
-                grid.appendChild(
-                    button
-                );
-
-            }
-        );
-
-
-        /* ================================
-           STATS BAN ĐẦU
-        ================================ */
-
-        const unanswered =
-            document.getElementById(
-                "unansweredCount-1"
-            );
-
-        const answered =
-            document.getElementById(
-                "answeredCount-1"
-            );
-
-
-        if (unanswered) {
-            unanswered.textContent =
-                questionElements.length;
-        }
-
-        if (answered) {
-            answered.textContent =
-                0;
-        }
-    }
-
-
-    /* ================================
-       RENDER TOÀN BỘ
-    ================================ */
+    /* =========================================================
+       RENDER
+    ========================================================= */
 
     function render() {
 
@@ -3779,169 +4579,182 @@ const MEDIA_URL = "https://archive.org/download/";
                 "questionsList-1"
             );
 
+
         if (!container) {
 
             console.error(
                 "Không tìm thấy #questionsList-1"
             );
 
+
             return;
         }
 
+
+        /* =====================================================
+           RESET QUESTION LIST
+        ===================================================== */
 
         container.innerHTML =
             "";
 
 
+        /* =====================================================
+           QUAN TRỌNG
+
+           KHÔNG ĐỘNG VÀO:
+           #questionGrid-1
+
+           QuizGrader sẽ tự render sidebar.
+        ===================================================== */
+
+
+        /* =====================================================
+           RENDER QUESTIONS
+        ===================================================== */
+
         questions.forEach(
+
             function (
                 question,
                 index
             ) {
 
                 container.appendChild(
+
                     createQuestion(
                         question,
                         index
                     )
                 );
-
             }
         );
-
-
-        /*
-         * Sau khi render xong câu hỏi
-         * => render số câu sidebar
-         */
-        renderSidebarQuestionNumbers();
     }
 
 
-    /* ================================
+    /* =========================================================
        PUBLIC API
-    ================================ */
+    ========================================================= */
 
     window.RenderQuizHtml = {
 
-        init: function (options) {
 
-            options =
-                options || {};
+        /* =====================================================
+           INIT
+        ===================================================== */
 
+        init:
+            function (options) {
 
-            if (
-                !Array.isArray(
-                    options.questions
-                )
-            ) {
-
-                console.error(
-                    "RenderQuizHtml.init(): questions phải là Array."
-                );
-
-                return;
-            }
+                options =
+                    options || {};
 
 
-            questions =
-                options.questions.slice();
+                if (
+                    !Array.isArray(
+                        options.questions
+                    )
+                ) {
+
+                    console.error(
+                        "RenderQuizHtml.init(): questions phải là Array."
+                    );
 
 
-            settings = {
-
-                folder:
-                    options.folder ||
-                    "",
-
-                shuffleAnswers:
-                    options.shuffleAnswers ===
-                    true
-            };
+                    return [];
+                }
 
 
-            render();
-        },
+                /* =============================================
+                   DATA
+                ============================================= */
+
+                questions =
+                    options.questions.slice();
 
 
-        /* ================================
-           RENDER LẠI
-        ================================ */
+                /* =============================================
+                   SETTINGS
+                ============================================= */
 
-        render: function () {
+                settings = {
 
-            render();
-        },
-
-
-        /* ================================
-           LẤY QUESTIONS
-        ================================ */
-
-        getQuestions: function () {
-
-            return questions.slice();
-        },
+                    folder:
+                        options.folder ||
+                        "",
 
 
-        /* ================================
+                    shuffleAnswers:
+
+                        options.shuffleAnswers ===
+                        true
+                };
+
+
+                /* =============================================
+                   RENDER
+                ============================================= */
+
+                render();
+
+
+                return questions.slice();
+            },
+
+
+        /* =====================================================
+           RENDER AGAIN
+        ===================================================== */
+
+        render:
+            function () {
+
+                render();
+            },
+
+
+        /* =====================================================
+           GET QUESTIONS
+        ===================================================== */
+
+        getQuestions:
+            function () {
+
+                return questions.slice();
+            },
+
+
+        /* =====================================================
            DESTROY
-        ================================ */
+        ===================================================== */
 
-        destroy: function () {
+        destroy:
+            function () {
 
-            const container =
-                document.getElementById(
-                    "questionsList-1"
-                );
+                const container =
+                    document.getElementById(
+                        "questionsList-1"
+                    );
 
-            if (container) {
 
-                container.innerHTML =
-                    "";
+                if (container) {
+
+                    container.innerHTML =
+                        "";
+                }
+
+
+                questions =
+                    [];
             }
-
-
-            const grid =
-                document.getElementById(
-                    "questionGrid-1"
-                );
-
-            if (grid) {
-
-                grid.innerHTML =
-                    "";
-            }
-
-
-            const unanswered =
-                document.getElementById(
-                    "unansweredCount-1"
-                );
-
-            const answered =
-                document.getElementById(
-                    "answeredCount-1"
-                );
-
-
-            if (unanswered) {
-                unanswered.textContent =
-                    0;
-            }
-
-            if (answered) {
-                answered.textContent =
-                    0;
-            }
-
-
-            questions = [];
-        }
     };
 
 
 })(window);
+
+  
+  
+  
   
  const quizQuestions = QuizQuestionPicker.init({
     questions: questionsData,
@@ -3958,6 +4771,14 @@ RenderQuizHtml.init({
     folder: folder,
     shuffleAnswers: true
 });
+  
+  
+  
+  
+  
+  
+  
 </script>
+
 </body>
 </html>
